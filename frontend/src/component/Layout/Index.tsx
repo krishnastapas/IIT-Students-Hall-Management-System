@@ -19,7 +19,7 @@ export default function Admin(props: { children: any }) {
     const { user } = useUserAuth()
     React.useEffect(() => {
         if (user) {
-            if (user.permissionNo == 4000) {
+            if (user.permissionNo == 1000) {
                 setNavigations(superAdmin_navigations)
             }
 

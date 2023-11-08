@@ -19,7 +19,7 @@ const Sidebar = (props: { open: any, onClose: any }) => {
   const { user } = useUserAuth()
   React.useEffect(() => {
     if (user) {
-      if (user.permissionNo == 4000) {
+      if (user.permissionNo == 1000) {
         setNavigations(superAdmin_navigations)
       }
       if (user.permissionNo == 3000) {
@@ -43,32 +43,12 @@ const Sidebar = (props: { open: any, onClose: any }) => {
 
       <div className={`mx-[56px] mt-[50px] flex items-center`}>
         <div className="mt-1 ml-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          Pathtex
+          HMS
           {/* <span className="font-medium"> Registration <br />Portal</span> */}
         </div>
 
       </div>
-      <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="mt-1 ml-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          {/* <button
-          type="button"
-          className="inline-block rounded-full bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-          Primary
-        </button> */}
-          {user.operation == "show-edit" || user.operation == "show" ? "" :
-
-            <button
-              type="button"
-              onClick={() => {
-                const role = getUserRole({ user: user })
-                navigate(`/${role}/student-list/add`)
-              }}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600  dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              Add Student
-            </button>
-          }
-        </div>
-      </div>
+     
 
 
       <div className="mt-[58px] mb-7 h-px bg-gray-300 dark:bg-white/30" />

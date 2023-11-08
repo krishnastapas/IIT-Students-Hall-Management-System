@@ -50,7 +50,6 @@ exports.find_staff = async ({ _id }) => {
 }
 
 exports.create_staff = async ({
-    _id,
     image,
     name,
     email,
@@ -64,7 +63,7 @@ exports.create_staff = async ({
 }) => {
     const data = await new db(
         {
-            _id: _id,
+            
             image: image,
             name: name,
             email: email,

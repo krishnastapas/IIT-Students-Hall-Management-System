@@ -37,7 +37,7 @@ mongoose
 
 
 
-
+app.use('/package-images/', express.static('uploads/hall-image'));
 
 // jwt login
 app.use("/api",require("./features/jwt-login/routes"))
@@ -46,7 +46,12 @@ app.use("/api",require("./features/jwt-login/routes"))
 app.use("/api", require("./features/cheifWarden/routes"))
 
 
+// staff
+app.use("/api",require("./features/staff/routes"))
 
+// hall
+
+app.use("/api",require("./features/hall/routes"))
 
 
 

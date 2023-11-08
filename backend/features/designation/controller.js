@@ -12,7 +12,8 @@ exports.getAllHall = async (req, res) => {
     }
 }
 
-exports.postAddHall = async (req, res) => {
+
+exports.postHall = async (req, res) => {
     try {
 
         // console.log("Inside Post Hall Api.....")
@@ -29,11 +30,10 @@ exports.postAddHall = async (req, res) => {
             date_time,
         } = req.body
 
-        const fileName = req.file.filename;
 
         const data = await create_hall({
             _id: _id,
-            image: fileName,
+            image: image,
             name: name,
             date_of_establish: date_of_establish,
             warden_incharge: warden_incharge,
@@ -56,7 +56,8 @@ exports.postAddHall = async (req, res) => {
 
 }
 
-exports.postEditHall = async (req, res) => {
+
+exports.putHall = async (req, res) => {
     try {
         // console.log("Inside hall update Api.....")
         const {
@@ -73,14 +74,10 @@ exports.postEditHall = async (req, res) => {
 
         } = req.body
 
-        let fileName;
-        if (req.file) {
-            fileName = req.file.filename;
 
-        }
         const data = await update_hall({
             _id: _id,
-            image: fileName ? fileName : image,
+            image: image,
             name: name,
             date_of_establish: date_of_establish,
             warden_incharge: warden_incharge,

@@ -1,14 +1,16 @@
 const express = require("express");
-const { } = require("./controllers");
-const { postHall, getAllHall, deleteHall, putHall } = require("./controller");
-
+const { getAllHall, deleteHall, postAddHall, postEditHall } = require("./controller");
+const FileHandler = require("../action/fileupload");
 
 const router = express.Router();
+const uploadDestination = 'uploads/hall-image'; 
+const fileHandler = new FileHandler(uploadDestination);
 
-router.post("/hall", postHall)
-router.get("/hall-all", getAllHall)
+router.post("/hall-add",fileHandler.uploadFile.bind(fileHandler),postAddHall)
+router.post("/hall-edit",fileHandler.uploadFile.bind(fileHandler),postEditHall)
+router.get("/hall-list", getAllHall)
 router.delete("/hall/:id",deleteHall)
-router.put("/hall",putHall)
+// router.put("/hall",putHall)
 
 
 module.exports = router;
