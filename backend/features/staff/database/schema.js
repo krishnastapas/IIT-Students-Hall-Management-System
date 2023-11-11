@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema(
     {
+        hallId:{
+            type:String,
+            required:[true,"Hall id is required"]
+        },
         name:{
             type:String,
             required: [true, "Name is Required."],

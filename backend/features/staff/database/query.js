@@ -18,6 +18,7 @@ exports.find_all_staff = async () => {
                 designation: data[i].designation,
                 date_of_joining: data[i].date_of_joining,
                 date_time: data[i].date_time,
+                hallId:data[i].hallId
             })
         }
 
@@ -60,6 +61,7 @@ exports.create_staff = async ({
     designation,
     date_of_joining,
     date_time,
+    hallId
 }) => {
     const data = await new db(
         {
@@ -74,6 +76,7 @@ exports.create_staff = async ({
             designation: designation,
             date_of_joining: date_of_joining,
             date_time: date_time,
+            hallId:hallId
         }
     ).save();
 
@@ -90,6 +93,7 @@ exports.create_staff = async ({
             designation: data.designation,
             date_of_joining: data.date_of_joining,
             date_time: data.date_time,
+            hallId:data.hallId
         }
     }
 
@@ -101,7 +105,6 @@ exports.update_staff = async ({
     image,
     name,
     email,
-    password,
     dob,
     salary,
     salaryType,
@@ -114,7 +117,6 @@ exports.update_staff = async ({
         image: image,
         name: name,
         email: email,
-        password: password,
         dob: dob,
         salary: salary,
         salaryType: salaryType,
