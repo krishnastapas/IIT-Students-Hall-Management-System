@@ -17,6 +17,14 @@ exports.find_all_hall = async () => {
                 about: data[i].about,
                 gallery: data[i].gallery,
                 date_time: data[i].date_time,
+                wardenEmail: data[i].wardenEmail,
+                wardenPassowrd: data[i].wardenPassowrd,
+                generalSecretory: data[i].generalSecretory,
+                sportSecretary: data[i].sportSecretary,
+                culuralSecretary: data[i].culuralSecretary,
+                environmentalSecretory: data[i].environmentalSecretory,
+                maintainanceSecretory: data[i].maintainanceSecretory,
+
             })
         }
 
@@ -41,6 +49,14 @@ exports.find_hall = async ({ _id }) => {
             about: data.about,
             gallery: data.gallery,
             date_time: data.date_time,
+            wardenEmail: data.wardenEmail,
+            wardenPassowrd: data.wardenPassowrd,
+            generalSecretory: data.generalSecretory,
+            sportSecretary: data.sportSecretary,
+            culuralSecretary: data.culuralSecretary,
+            environmentalSecretory: data.environmentalSecretory,
+            maintainanceSecretory: data.maintainanceSecretory,
+
         }
     }
 
@@ -58,6 +74,14 @@ exports.create_hall = async ({
     about,
     gallery,
     date_time,
+    wardenEmail,
+    wardenPassowrd,
+    generalSecretory,
+    sportSecretary,
+    culuralSecretary,
+    environmentalSecretory,
+    maintainanceSecretory,
+
 }) => {
     const data = await new db(
         {
@@ -71,6 +95,14 @@ exports.create_hall = async ({
             about: about,
             gallery: gallery,
             date_time: date_time,
+            wardenEmail: wardenEmail,
+            wardenPassowrd: wardenPassowrd,
+            generalSecretory: generalSecretory,
+            sportSecretary: sportSecretary,
+            culuralSecretary: culuralSecretary,
+            environmentalSecretory: environmentalSecretory,
+            maintainanceSecretory: maintainanceSecretory,
+
         }
     ).save();
 
@@ -86,6 +118,14 @@ exports.create_hall = async ({
             about: data.about,
             gallery: data.gallery,
             date_time: data.date_time,
+            wardenEmail: data.wardenEmail,
+            wardenPassowrd: data.wardenPassowrd,
+            generalSecretory: data.generalSecretory,
+            sportSecretary: data.sportSecretary,
+            culuralSecretary: data.culuralSecretary,
+            environmentalSecretory: data.environmentalSecretory,
+            maintainanceSecretory: data.maintainanceSecretory,
+
         }
     }
 
@@ -102,7 +142,15 @@ exports.update_hall = async ({
     established_by,
     about,
     gallery,
-    date_time, }) => {
+    date_time,
+    wardenEmail,
+    wardenPassowrd,
+    generalSecretory,
+    sportSecretary,
+    culuralSecretary,
+    environmentalSecretory,
+    maintainanceSecretory,
+}) => {
 
     const data = await db.updateOne({ _id: _id }, {
         image: image,
@@ -114,6 +162,14 @@ exports.update_hall = async ({
         about: about,
         gallery: gallery,
         date_time: date_time,
+        wardenEmail: wardenEmail,
+        wardenPassowrd: wardenPassowrd,
+        generalSecretory: generalSecretory,
+        sportSecretary: sportSecretary,
+        culuralSecretary: culuralSecretary,
+        environmentalSecretory: environmentalSecretory,
+        maintainanceSecretory: maintainanceSecretory,
+
     })
 
     if (data) {

@@ -96,12 +96,21 @@ export const editHall = async (hall: HallInterface) => {
 
     let accessToken = getJwtToken();
     const formData = new FormData();
-
+    
     formData.append("name",hall.name);
     formData.append("_id",hall._id??"");
     formData.append("about",hall.about);
     formData.append("date_of_establish",hall.date_of_establish);
     formData.append("established_by",hall.established_by);
+    formData.append("image",hall.image??"");
+    formData.append("warden_incharge",hall.warden_incharge);
+    formData.append("care_taker",hall.care_taker);
+    formData.append("wardenEmail",hall.wardenEmail);
+    formData.append("generalSecretory",hall.generalSecretory);
+    formData.append("sportSecretary",hall.sportSecretary);
+    formData.append("environmentalSecretory",hall.environmentalSecretory);
+    formData.append("culuralSecretary",hall.culuralSecretary);
+    formData.append("maintainanceSecretory",hall.maintainanceSecretory);
     formData.append("file",hall.imagefile);
 
     try {

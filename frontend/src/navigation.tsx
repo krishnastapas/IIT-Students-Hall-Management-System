@@ -47,26 +47,8 @@ export const superAdmin_navigations = [
     name: "Hall Management",
     // layout: "/super-admin",
     path: "/chief-warden/hall-management",
-    icon: <MdAccessibilityNew className="h-6 w-6" />,
-    secondary: true,
-  },
-  {
-    name: "Staff",
-    // layout: "/super-admin",
     icon: <MdAddHome className="h-6 w-6" />,
-    path: "/chief-warden/staff-management",
-  },
-  {
-    name: "Admin Management",
-    // layout: "/admin",
-    path: "/super-admin/admin-management",
-    icon: <MdAccountBox className="h-6 w-6" />,
-  },
-  {
-    name: "Ticket",
-    // layout: "/admin",
-    path: "/super-admin/ticket-raise",
-    icon: <MdRecordVoiceOver className="h-6 w-6" />,
+    secondary: true,
   },
  
 ];

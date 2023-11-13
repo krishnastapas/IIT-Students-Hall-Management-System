@@ -2,47 +2,45 @@ import React, { useEffect, useState } from 'react'
 import TestTable from './Table'
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
-import { readHallList } from '../repository';
+import { readStuffList } from '../repository';
 import Add from './Add';
 // import Edit from './Edit';
-import { HallInterface } from '../Model';
+import { StaffInterface } from '../Model';
 import Table from './Table';
 import Edit from './Edit';
-// import Edit from './Edit';
 
 function Index() {
   const navigate = useNavigate();
   const { user } = useUserAuth()
   const [showModal, setShowModal] = useState("")
-  const initialvalue: HallInterface = {
-    about:"",
-    care_taker:"",
-    date_of_establish:"",
-    date_time:"",
-    established_by:"",
-    name:"",
-    warden_incharge:"",
-    culuralSecretary:"",
-    environmentalSecretory:"",
-    generalSecretory:"",
-    maintainanceSecretory:"",
-    sportSecretary:"",
-    wardenEmail:"",
-    wardenPassowrd:"",
+  const initialvalue: StaffInterface = {
+    date_of_joining: "",
+    date_time: "",
+    designation: "",
+    dob: "",
+    email: "",
+    image: "",
+    name: "",
+    password: "",
+    salary: 0,
+    salaryType: "",
   }
-  const [currentHall, setCurrentHall] = useState<HallInterface>(initialvalue)
+  const [currentStaff, setCurrentStaff] = useState<StaffInterface>(initialvalue)
+
   const [showFilterOption, setShowFilterOption] = useState(false);
   const [siteFilter, setSiteFilter] = useState("all")
   const [centreFilter, setCentreFilter] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
 
-  const [hallList, setHallList] = useState<HallInterface[]>([])
+  const [staffList, setStaffList] = useState<StaffInterface[]>([])
 
+  // const [totalNoOfTest, setTotalNoOfTest] = useState(0)
 
-  
+  // const [page, setPage] = useState(1)
+  // const [limit, setLimit] = useState(10)
 
-  const handleEditButton = (hall: HallInterface) => {
-    setCurrentHall(hall);
+  const handleEditButton = (staff: StaffInterface) => {
+    setCurrentStaff(staff);
     setShowModal("edit")
   }
   // const handleActiveButton = (value:boolean,test:TestInterface) => {
@@ -51,16 +49,16 @@ function Index() {
 
 
 
-  const fetchHallList = async () => {
-    const data = await readHallList()
+  const fetchStaffList = async () => {
+    const data = await readStuffList()
     // console.log(data)
-    setHallList(data)
+    setStaffList(data)
   }
 
 
 
   useEffect(() => {
-    fetchHallList()
+    fetchStaffList()
 
   }, [siteFilter, searchQuery, centreFilter,])
   return (
@@ -92,33 +90,39 @@ function Index() {
             <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            Add hall
+            Add staff
           </button>}
 
 
         </div>
       </div>
       <Table
-        fetchHallList={fetchHallList}
+        fetchStaffList={fetchStaffList}
         handleEditButton={handleEditButton}
-        hallList={hallList}
+        staffList={staffList}
 
       // handleActiveButton={handleActiveButton}
       />
 
       {showModal == "add" ? <Add
-        getHallList={fetchHallList}
+        getStaffList={fetchStaffList}
         onClose={() => setShowModal("")}
 
       /> : ""}
 
       {showModal == "edit" ? <Edit
-        getHallList={fetchHallList}
+        getStaffList={fetchStaffList}
         onClose={()=>setShowModal("")}
-        hallData={currentHall}
+        staff={currentStaff}
       /> : ""}
 
-      
+      {/* {showModal == "showQuestionPaper" ?
+        <ShowquestionPaper
+          onClose={() => setShowModal("")}
+          test={currentTest}
+
+
+        /> : ""} */}
     </div>
   )
 }

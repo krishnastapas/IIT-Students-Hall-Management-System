@@ -1,4 +1,4 @@
-const { find_all_hall, create_hall, update_hall, delete_hall } = require("./database/query")
+const { find_all_hall, create_hall, update_hall, delete_hall, find_hall } = require("./database/query")
 
 // get all section of student
 exports.getAllHall = async (req, res) => {
@@ -7,6 +7,17 @@ exports.getAllHall = async (req, res) => {
         console.log(data)
 
         return res.send({ code: 200, data: data.reverse(), message: "Data fetched succesfully" })
+    } catch (error) {
+        return res.send({ code: 500, message: "Error" + error })
+    }
+}
+exports.getHall = async (req, res) => {
+    try {
+        const {id}=req.params
+        const data = await find_hall({_id:id})
+        console.log(data)
+
+        return res.send({ code: 200, data: data, message: "Data fetched succesfully" })
     } catch (error) {
         return res.send({ code: 500, message: "Error" + error })
     }
@@ -27,6 +38,13 @@ exports.postAddHall = async (req, res) => {
             about,
             gallery,
             date_time,
+            wardenEmail,
+            wardenPassowrd,
+            generalSecretory,
+            sportSecretary,
+            culuralSecretary,
+            environmentalSecretory,
+            maintainanceSecretory,
         } = req.body
 
         const fileName = req.file.filename;
@@ -42,6 +60,14 @@ exports.postAddHall = async (req, res) => {
             about: about,
             gallery: gallery,
             date_time: date_time,
+            wardenEmail: wardenEmail,
+            wardenPassowrd: wardenPassowrd,
+            generalSecretory: generalSecretory,
+            sportSecretary: sportSecretary,
+            culuralSecretary: culuralSecretary,
+            environmentalSecretory: environmentalSecretory,
+            maintainanceSecretory: maintainanceSecretory,
+
 
         });
 
@@ -70,6 +96,13 @@ exports.postEditHall = async (req, res) => {
             about,
             gallery,
             date_time,
+            wardenEmail,
+            wardenPassowrd,
+            generalSecretory,
+            sportSecretary,
+            culuralSecretary,
+            environmentalSecretory,
+            maintainanceSecretory,
 
         } = req.body
 
@@ -89,6 +122,14 @@ exports.postEditHall = async (req, res) => {
             about: about,
             gallery: gallery,
             date_time: date_time,
+            wardenEmail: wardenEmail,
+            wardenPassowrd: wardenPassowrd,
+            generalSecretory: generalSecretory,
+            sportSecretary: sportSecretary,
+            culuralSecretary: culuralSecretary,
+            environmentalSecretory: environmentalSecretory,
+            maintainanceSecretory: maintainanceSecretory,
+
         })
 
         if (!data) {

@@ -37,7 +37,7 @@ mongoose
 
 
 
-app.use('/package-images/', express.static('uploads/hall-image'));
+app.use('/api/hall-images/', express.static('uploads/hall-image'));
 
 // jwt login
 app.use("/api",require("./features/jwt-login/routes"))
@@ -53,6 +53,11 @@ app.use("/api",require("./features/staff/routes"))
 
 app.use("/api",require("./features/hall/routes"))
 
+// block
+app.use("/api",require("./features/block/routes"));
+
+// room 
+app.use("/api",require("./features/room/routes"))
 
 
 app.use(express.static(path.join(__dirname, 'dist')));

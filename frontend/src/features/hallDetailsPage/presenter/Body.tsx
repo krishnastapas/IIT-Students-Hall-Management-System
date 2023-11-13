@@ -2,22 +2,27 @@ import React, { useState } from 'react'
 import Profile from './Profile';
 import Staff from './Staff';
 import Rooms from './Rooms';
-const tabList=[
+import { HallInterface } from '../../hall/Model';
+const tabList = [
     {
-        id:1,
-        name:"Profile",
+        id: 1,
+        name: "Profile",
     },
     {
-        id:2,
-        name:"Staff",
+        id: 2,
+        name: "Staff",
     },
     {
-        id:3,
-        name:"Rooms",
+        id: 3,
+        name: "Rooms",
     }
 ]
-function Body() {
-    const [currentTab,setCurrentTab]=useState(1)
+function Body(
+    props: {
+        hall: HallInterface,
+        fetchHall: () => void
+    }) {
+    const [currentTab, setCurrentTab] = useState(1)
     return (
         <div>
             <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
@@ -38,9 +43,9 @@ function Body() {
                 </ul>
             </div>
 
-            {currentTab==1?<Profile/>:""}
-            {currentTab==2?<Staff/>:""}
-            {currentTab==3?<Rooms/>:""}
+            {currentTab == 1 ? <Profile fetchHall={props.fetchHall} hall={props.hall} /> : ""}
+            {currentTab == 2 ? <Staff /> : ""}
+            {currentTab == 3 ? <Rooms /> : ""}
 
         </div>
     )
