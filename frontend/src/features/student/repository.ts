@@ -2,13 +2,13 @@ import { showMessage } from "../../utils/alert";
 import { getJwtToken } from "../../utils/function";
 import { responseInterface } from "../Model";
 import axios from "../axios";
-import { StaffInterface } from "./Model";
+import { StudentInterface } from "./Model";
 
-export const readStuffList = async () => {
+export const readStudentList = async () => {
 
     try {
 
-        const path = "/staff-list";
+        const path = "/student-list";
 
         let accessToken = getJwtToken()
 
@@ -36,10 +36,10 @@ export const readStuffList = async () => {
     }
 }
 
-export const addStaff = async (staff: StaffInterface) => {
+export const addStudent = async (student: StudentInterface) => {
 
-    let path = `/staff`
-    let payload =staff
+    let path = `/student`
+    let payload =student
 
     // console.log(payload)
     let accessToken = getJwtToken();
@@ -69,12 +69,12 @@ export const addStaff = async (staff: StaffInterface) => {
 
 }
 
-//update  a staff
-export const editStaff = async (staff: StaffInterface) => {
+//update  a student
+export const editStudent = async (student: StudentInterface) => {
 
-    let path = `/staff`
+    let path = `/student`
 
-    let payload = staff
+    let payload = student
 
     let accessToken = getJwtToken();
 
@@ -104,10 +104,10 @@ export const editStaff = async (staff: StaffInterface) => {
 
 }
 
-//delete a staff
-export const deleteStaffApi = async (id:string) => {
+//delete a student
+export const deleteStudentApi = async (id:string) => {
     console.log(id)
-    let path = `/staff/${id}`
+    let path = `/student/${id}`
 
 
     let accessToken = getJwtToken()

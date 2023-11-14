@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import TestTable from './Table'
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
-import { readStuffList } from '../repository';
+import { readStudentList } from '../repository';
 import Add from './Add';
 // import Edit from './Edit';
-import { StaffInterface } from '../Model';
+import { StudentInterface } from '../Model';
 import Table from './Table';
 import Edit from './Edit';
 
@@ -13,34 +13,36 @@ function Index() {
   const navigate = useNavigate();
   const { user } = useUserAuth()
   const [showModal, setShowModal] = useState("")
-  const initialvalue: StaffInterface = {
-    date_of_joining: "",
-    date_time: "",
-    designation: "",
-    dob: "",
-    email: "",
-    image: "",
-    name: "",
-    password: "",
-    salary: 0,
-    salaryType: "",
+  const initialvalue: StudentInterface = {
+    rollNumber:"",
+    courseName:"",
+    department:"",
+    admisionDate:"",
+    vallidDate:"",
+    name:"",
+    email:"",
+    address:"",
+    phoneNumber:"",
+    password:"",
+    dob:"",
+    date_time:"",
   }
-  const [currentStaff, setCurrentStaff] = useState<StaffInterface>(initialvalue)
+  const [currentStudent, setCurrentStudent] = useState<StudentInterface>(initialvalue)
 
   const [showFilterOption, setShowFilterOption] = useState(false);
   const [siteFilter, setSiteFilter] = useState("all")
   const [centreFilter, setCentreFilter] = useState("")
   const [searchQuery, setSearchQuery] = useState("")
 
-  const [staffList, setStaffList] = useState<StaffInterface[]>([])
+  const [studentList, setStudentList] = useState<StudentInterface[]>([])
 
   // const [totalNoOfTest, setTotalNoOfTest] = useState(0)
 
   // const [page, setPage] = useState(1)
   // const [limit, setLimit] = useState(10)
 
-  const handleEditButton = (staff: StaffInterface) => {
-    setCurrentStaff(staff);
+  const handleEditButton = (student: StudentInterface) => {
+    setCurrentStudent(student);
     setShowModal("edit")
   }
   // const handleActiveButton = (value:boolean,test:TestInterface) => {
@@ -49,16 +51,16 @@ function Index() {
 
 
 
-  const fetchStaffList = async () => {
-    const data = await readStuffList()
+  const fetchStudentList = async () => {
+    const data = await readStudentList()
     // console.log(data)
-    setStaffList(data)
+    setStudentList(data)
   }
 
 
 
   useEffect(() => {
-    fetchStaffList()
+    fetchStudentList()
 
   }, [siteFilter, searchQuery, centreFilter,])
   return (
@@ -90,30 +92,30 @@ function Index() {
             <svg className="h-3.5 w-3.5 mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            Add staff
+            Add student
           </button>}
 
 
         </div>
       </div>
       <Table
-        fetchStaffList={fetchStaffList}
+        fetchStudentList={fetchStudentList}
         handleEditButton={handleEditButton}
-        staffList={staffList}
+        studentList={studentList}
 
       // handleActiveButton={handleActiveButton}
       />
 
       {showModal == "add" ? <Add
-        getStaffList={fetchStaffList}
+        getStudentList={fetchStudentList}
         onClose={() => setShowModal("")}
 
       /> : ""}
 
       {showModal == "edit" ? <Edit
-        getStaffList={fetchStaffList}
+        getStudentList={fetchStudentList}
         onClose={()=>setShowModal("")}
-        staff={currentStaff}
+        student={currentStudent}
       /> : ""}
 
       {/* {showModal == "showQuestionPaper" ?

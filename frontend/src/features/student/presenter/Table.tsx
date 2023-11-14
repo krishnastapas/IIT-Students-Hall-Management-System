@@ -5,19 +5,14 @@ import { useUserAuth } from '../../context/UserAuthContext'
 import { HiOutlinePencil, HiArchive } from "react-icons/hi";
 import { confirmationMessage } from '../../../utils/alert'
 import { getUserRole } from '../../auth/authRoles'
-import { StaffInterface } from '../Model';
-import { deleteStaffApi } from '../repository';
+import { StudentInterface } from '../Model';
+import { deleteStudentApi } from '../repository';
 function Table(props: {
 
 
-    fetchStaffList: () => void
-    // totalNoOfstaff: number,
-    staffList: StaffInterface[],
-    // pageNo: number,
-    // limit: number,
-    // changePage: (value: number) => void
-    handleEditButton: (staff: StaffInterface) => void
-    // handleShowQuestionButton: (staff: StaffInterface) => void
+    fetchStudentList: () => void
+    studentList: StudentInterface[],
+    handleEditButton: (student: StudentInterface) => void
 }) {
     const navigate = useNavigate();
     const { user } = useUserAuth()
@@ -26,18 +21,18 @@ function Table(props: {
 
  
 
-    // let count = props.totalNoOfstaff / props.limit;
+    // let count = props.totalNoOfstudent / props.limit;
     // const arrayNos = []
     // for (let i = 0; i < count; i++) {
     //     arrayNos.push(i + 1)
     // }
-    const onClickDelete = async (staff: StaffInterface) => {
-        const flag = await confirmationMessage("Do you really want to delete the staff details ?");
+    const onClickDelete = async (student: StudentInterface) => {
+        const flag = await confirmationMessage("Do you really want to delete the student details ?");
         if (flag) {
 
-            const data = await deleteStaffApi(staff._id ?? "");
+            const data = await deleteStudentApi(student._id ?? "");
             if (data) {
-                props.fetchStaffList()
+                props.fetchStudentList()
             }
         }
     }
@@ -51,12 +46,15 @@ function Table(props: {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-10 py-3">Name</th>
+                            <th scope="col" className="px-2 py-3"> Roll Number</th>
                             <th scope="col" className="px-2 py-3">Eamil</th>
+                            <th scope="col" className="px-4 py-3">Phone</th>
+                            <th scope="col" className="px-2 py-3">Adress</th>
+                            <th scope="col" className="px-2 py-3">Course</th>
+                            <th scope="col" className="px-2 py-3">Department</th>
                             <th scope="col" className="px-2 py-3"> Date Of Birth</th>
-                            <th scope="col" className="px-2 py-3"> Date Of Joining</th>
-                            <th scope="col" className="px-4 py-3">Designation</th>
-                            <th scope="col" className="px-2 py-3"> Salary</th>
-                            <th scope="col" className="px-4 py-3">Salary type</th>
+                            <th scope="col" className="px-2 py-3"> Date Of Admission</th>
+                            <th scope="col" className="px-4 py-3">vallid Upto</th>
                             {/* <th scope="col" className="px-2 py-3">Show</th> */}
                             {/* <th scope="col" className="px-2 py-3">Active</th> */}
                             {user.operation == "show" ? "" :
@@ -71,22 +69,25 @@ function Table(props: {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.staffList.map((staff: StaffInterface, index: number) => {
+                        {props.studentList.map((student: StudentInterface, index: number) => {
                             return (
                                 <tr className="border-b dark:border-gray-700">
-                                    <th scope="row" className="px-10 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{staff.name}</th>
-                                    <td className="px-2 py-3">{staff.email}</td>
-                                    <td className="px-2 py-3">{staff.dob}</td>
-                                    <td className="px-2 py-3">{staff.date_of_joining}</td>
-                                    <td className="px-2 py-3">{staff.designation}</td>
-                                    <td className="px-2 py-3">{staff.salary}</td>
-                                    <td className="px-2 py-3">{staff.salaryType}</td>
+                                    <th scope="row" className="px-10 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.name}</th>
+                                    <td className="px-2 py-3">{student.rollNumber}</td>
+                                    <td className="px-2 py-3">{student.email}</td>
+                                    <td className="px-2 py-3">{student.phoneNumber}</td>
+                                    <td className="px-2 py-3">{student.address}</td>
+                                    <td className="px-2 py-3">{student.courseName}</td>
+                                    <td className="px-2 py-3">{student.department}</td>
+                                    <td className="px-2 py-3">{student.dob}</td>
+                                    <td className="px-2 py-3">{student.admisionDate}</td>
+                                    <td className="px-2 py-3">{student.vallidDate}</td>
 
                                     <td className="px-2 py-3">
 
                                         {/* <div className="flex items-center gap-2">
                                             <div className={`rounded-full text-xl`}>
-                                                {staff.active ? (
+                                                {student.active ? (
                                                     <MdCheckCircle className="text-green-500" />
                                                 ) : (
                                                     <MdCancel className="text-red-500" />
@@ -94,18 +95,18 @@ function Table(props: {
                                             </div>
                                            
                                         </div> */}
-                                        {/* <Switch checked={staff.active}
+                                        {/* <Switch checked={student.active}
                                             handleChange={(value)=>{
-                                                // props.handleActiveButton(value,staff)
+                                                // props.handleActiveButton(value,student)
                                                 console.log(value)
-                                                handleActiveButton(staff,value)
+                                                handleActiveButton(student,value)
                                             }} /> */}
                                         {/* <label className="relative inline-flex items-center cursor-pointer">
                                             <input 
                                             type="checkbox" 
-                                            checked={staff.active}
+                                            checked={student.active}
                                             onChange={()=>{
-                                                handleActiveButton(staff,!staff.active)
+                                                handleActiveButton(student,!student.active)
                                             }}
                                             className="sr-only peer"/>
                                                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
@@ -122,7 +123,7 @@ function Table(props: {
                                             type="button"
                                             onClick={() => {
                                                 // const link = getUserRole({ user: user })
-                                                // navigate("/" + link + "/staff-management/add-question/" + staff._id+"/"+staff.omrId)
+                                                // navigate("/" + link + "/student-management/add-question/" + student._id+"/"+student.omrId)
                                             }}
                                             className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">
                                             
@@ -135,9 +136,9 @@ function Table(props: {
 
                                         <button
                                             type="button"
-                                            disabled={!staff.active}
+                                            disabled={!student.active}
                                             onClick={() => {
-                                                props.handleShowQuestionButton(staff)
+                                                props.handleShowQuestionButton(student)
                                             }}
                                             className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">Show Question Paper</button>
 
@@ -151,7 +152,7 @@ function Table(props: {
                                         {user.operation == "show" ? "" :
                                             <>
                                                 <div className={`rounded-full text-xl cursor-pointer m-5`} onClick={() => {
-                                                    props.handleEditButton(staff)
+                                                    props.handleEditButton(student)
                                                 }}>
 
                                                     <HiOutlinePencil />
@@ -160,14 +161,14 @@ function Table(props: {
                                                     type="button"
                                                     onClick={() => {
                                                         // const link = getUserRole({ user: user })
-                                                        // navigate("/" + link + "/staff-list/edit/" + staff.id)
+                                                        // navigate("/" + link + "/student-list/edit/" + student.id)
                                                     }}
                                                     className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">Edit</button> */}
                                             </>}
                                         {user.operation == "show-edit" || user.operation == "show" ? "" :
                                             <>
                                                 <div className={`rounded-full text-xl cursor-pointer m-5`} onClick={() => {
-                                                    onClickDelete(staff)
+                                                    onClickDelete(student)
 
                                                 }}>
 
@@ -176,7 +177,7 @@ function Table(props: {
                                                 {/* <button
                                                     type="button"
                                                     onClick={() => {
-                                                        onClickDelete(staff)
+                                                        onClickDelete(student)
                                                     }}
                                                     className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</button> */}
 
@@ -194,9 +195,9 @@ function Table(props: {
             {/* <nav className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
                 <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                     Showing
-                    <span className="font-semibold text-gray-900 dark:text-white">{props.totalNoOfstaff ? props.limit * (props.pageNo - 1) + 1 : 0}-{(props.limit * (props.pageNo)) > props.totalNoOfstaff ? props.totalNoOfstaff : (props.limit * (props.pageNo))}</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{props.totalNoOfstudent ? props.limit * (props.pageNo - 1) + 1 : 0}-{(props.limit * (props.pageNo)) > props.totalNoOfstudent ? props.totalNoOfstudent : (props.limit * (props.pageNo))}</span>
                     of
-                    <span className="font-semibold text-gray-900 dark:text-white">{props.totalNoOfstaff}</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{props.totalNoOfstudent}</span>
                 </span>
                 <ul className="inline-flex items-stretch -space-x-px">
                     {/* privious */}
@@ -248,7 +249,7 @@ function Table(props: {
                     {/* <li>
                         <a href="#"
                             onClick={() => {
-                                if (props.pageNo != Math.ceil(props.totalNoOfstaff / props.limit))
+                                if (props.pageNo != Math.ceil(props.totalNoOfstudent / props.limit))
                                     props.changePage(props.pageNo + 1)
                             }}
                             className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">

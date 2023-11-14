@@ -1,4 +1,87 @@
+const { generateToken, decodeToken } = require("../../helpers/tokens");
+const { create_login_session, delete_login_session } = require("../login_session/database/query");
 const { find_all_hall, create_hall, update_hall, delete_hall, find_hall } = require("./database/query")
+
+
+exports.wardenLogin = async (req, res) => {
+    try {
+
+        //   console.log("Inside super admin login controllers.................")
+        const { email, password } = req.body;
+
+        //   console.log(email)
+        //   console.log(password)
+
+        //finding superadmin email in database
+        let sa = await find_hall({ wardenEmail: email })
+
+        if (!sa) {
+            return res.send({
+                code: 400,
+                message:
+                    "The email address you entered is not connected to an account.",
+            });
+        }
+
+        // const login_session = await find_login_sesssion_Id({ userId: sa._id })
+
+        // alredy someone Logged in
+        // if (login_session) {
+        //   return res.send({
+        //     code: 300,
+        //     userId: sa._id,
+        //     message: "Already You are logged In from other device.",
+
+        //   })
+        // }
+
+
+        // comaparing password
+        const check = await bcrypt.compare(password, sa.password);
+
+        // if passsowrd doesn't match
+        if (!check) {
+            return res.send({
+                code: 400,
+                message: "Invalid credentials.Please try again.",
+            });
+        }
+
+        const token = generateToken({ permissionNo: 2000, id: sa._id.toString() }, "7d");
+
+        // store in the database  in login session
+        const data = await create_login_session({ userId: sa._id, accessToken: token })
+
+        // seding api response
+        let wardenData = {
+            ...sa,
+            name: sa.warden_incharge,
+            email: sa.wardenEmail,
+            permissionNo: 2000,
+        }
+        res.send({ code: 200, data: { userInfo: wardenData, jwtToken: token }, message: " Warden logged in" });
+    } catch (error) {
+        res.send({ code: 500, message: error.message });
+    }
+};
+
+exports.wardenLoggout = async (req, res) => {
+    try {
+        const accesstoken = req.headers['Authorization']
+        const token = decodeToken(accesstoken);
+
+        // delete the entry with this 
+        const data = await delete_login_session({ accesstoken: token })
+        if (!data) {
+            return res.send({ code: 400, message: "Cannot Logout! server Error." })
+        }
+
+        return res.send({ code: 200, message: "Logout successfully." })
+    } catch (error) {
+        return res.send({ code: 500, message: error.message })
+    }
+}
+
 
 // get all section of student
 exports.getAllHall = async (req, res) => {
@@ -13,8 +96,8 @@ exports.getAllHall = async (req, res) => {
 }
 exports.getHall = async (req, res) => {
     try {
-        const {id}=req.params
-        const data = await find_hall({_id:id})
+        const { id } = req.params
+        const data = await find_hall({ _id: id })
         console.log(data)
 
         return res.send({ code: 200, data: data, message: "Data fetched succesfully" })

@@ -42,12 +42,20 @@ app.use('/api/hall-images/', express.static('uploads/hall-image'));
 // jwt login
 app.use("/api",require("./features/jwt-login/routes"))
 
+// login session
+app.use("/api",require("./features/login_session/routes"))
+
+
+
 // superadmin
 app.use("/api", require("./features/cheifWarden/routes"))
 
 
 // staff
 app.use("/api",require("./features/staff/routes"))
+
+// student
+app.use("/api",require("./features/student/routes"))
 
 // hall
 

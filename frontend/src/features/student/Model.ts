@@ -3,7 +3,7 @@ export interface StudentInterface {
     rollNumber:string,
     courseName:string,
     department:string,
-    admisionYear:string,
+    admisionDate:string,
     vallidDate:string,
     name:string,
     email:string,

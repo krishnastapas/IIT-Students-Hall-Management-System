@@ -44,6 +44,13 @@ export const admin_navigations = [
 
 export const superAdmin_navigations = [
   {
+    name: "Student Management",
+    // layout: "/super-admin",
+    path: "/chief-warden/student-list",
+    icon: <MdAccountBox className="h-6 w-6" />,
+    secondary: true,
+  },
+  {
     name: "Hall Management",
     // layout: "/super-admin",
     path: "/chief-warden/hall-management",

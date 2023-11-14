@@ -33,9 +33,17 @@ exports.find_all_hall = async () => {
     return []
 
 }
-exports.find_hall = async ({ _id }) => {
+exports.find_hall = async ({ _id ,wardenEmail}) => {
 
-    const data = await db.findOne({ _id: _id });
+    let data
+    if(_id){
+
+        data = await db.findOne({ _id: _id });
+    } 
+    if(wardenEmail){
+        data = await db.findOne({ wardenEmail: wardenEmail });
+
+    }
 
     if (data) {
         return {

@@ -1,67 +1,54 @@
 import React, { useEffect, useState } from 'react'
-import { StaffInterface } from '../Model';
-import { addStaff, editStaff } from '../repository';
+import { StudentInterface } from '../Model';
+import { addStudent, editStudent } from '../repository';
 import { designationList, salaryTypeList } from '../../../utils/constantData';
 
 
-
-// const designation=["warden","caretaker",""]
-
+const department = ["Computer Science", "Mechanical", "Electrical", "Electronics", "Civil"]
+const courseList = ["BTech", "MTech", "PHD", "MSC"]
 
 
 
 
 function Edit(props: {
-    staff:StaffInterface
     onClose: () => void,
-    getStaffList: () => void
+    getStudentList: () => void,
+    student: StudentInterface
 }) {
 
-    const initialvalue: StaffInterface = {
+    const initialvalue: StudentInterface = {
+        rollNumber: "",
+        courseName: "",
+        department: "",
+        admisionDate: "",
+        vallidDate: "",
         name: "",
         email: "",
-        salary: 0,
-        salaryType: "",
-        date_of_joining: "",
+        address: "",
+        phoneNumber: "",
+        password: "",
         dob: "",
         date_time: "",
-        designation: "",
-
-        image: "",
-        password: "",
     }
-    const [staff, setStaff] = useState<StaffInterface>(initialvalue)
+    const [student, setStudent] = useState<StudentInterface>(initialvalue)
 
     const [otherdesignation, setOtherDesgination] = useState("")
     const handleSubmitButton = async (e: any) => {
         e.preventDefault()
-        let staffData: StaffInterface = {
-            ...staff,
-            password: staff.dob,
 
-        }
-        if (staff.designation == "other") {
-            staffData = {
-                ...staff,
-                designation: otherdesignation,
-                password: staff.dob,
-
-            }
-        }
-        const data = await editStaff(staffData);
+        const data = await editStudent(student);
         if (data) {
-            props.getStaffList();
+            props.getStudentList();
             props.onClose()
         }
 
     }
 
 
-    // console.log(staff)
-
-    useEffect(()=>{
-        setStaff(props.staff)
-    },[])
+    // console.log(student)
+    useEffect(() => {
+        setStudent(props.student)
+    }, [])
     return (
         <div className="fixed top-0 left-0 right-0 z-50  p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full w-full justify-center items-center flex bg-[#00000096]">
             <div className="relative w-full max-w-md max-h-full mx-auto">
@@ -75,15 +62,15 @@ function Edit(props: {
                         <span className="sr-only" >Close modal</span>
                     </button>
                     <div className="px-6 py-6 lg:px-8">
-                        <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit staff</h3>
+                        <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit student</h3>
                         <form className="space-y-6" action="#">
 
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Name *</label>
                                 <input
-                                    value={staff.name}
+                                    value={student.name}
                                     onChange={(e: any) => {
-                                        setStaff({ ...staff, name: e.target.value })
+                                        setStudent({ ...student, name: e.target.value })
                                     }}
                                     type="text" name="name" id="email"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -94,47 +81,82 @@ function Edit(props: {
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Email *</label>
                                 <input
-                                    value={staff.email}
+                                    value={student.email}
                                     onChange={(e: any) => {
-                                        setStaff({ ...staff, email: e.target.value })
+                                        setStudent({ ...student, email: e.target.value })
                                     }}
                                     id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    placeholder="example@domain.com" required />
+                                    required />
                             </div>
 
 
                             <div>
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Salary (in Rs) *</label>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Roll Number *</label>
                                 <input
-                                    value={staff.salary}
+                                    value={student.rollNumber}
                                     onChange={(e: any) => {
-                                        setStaff({ ...staff, salary: e.target.value })
+                                        setStudent({ ...student, rollNumber: e.target.value })
                                     }}
-                                    type="number" placeholder="180"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                                    id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required />
+                            </div>
+
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Address*</label>
+                                <input
+                                    value={student.address}
+                                    onChange={(e: any) => {
+                                        setStudent({ ...student, address: e.target.value })
+                                    }}
+                                    id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required />
                             </div>
 
 
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter phone Number *</label>
+                                <input
+                                    value={student.phoneNumber}
+                                    onChange={(e: any) => {
+                                        setStudent({ ...student, phoneNumber: e.target.value })
+                                    }}
+                                    type='text'
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    required />
+                            </div>
+
+
+                            {/* 
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Course*</label>
+                                <input
+                                    value={student.courseName}
+                                    onChange={(e: any) => {
+                                        setStudent({ ...student, courseName: e.target.value })
+                                    }}
+                                    type="text" 
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+                            </div> */}
 
                             <div className="md:col-span-5">
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salary Type *</label>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course *</label>
 
                                 <select
                                     name="salary_type"
                                     id="salary_type"
                                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                    value={staff.salaryType}
+                                    value={student.courseName}
                                     onChange={(e) => {
-                                        setStaff({
-                                            ...staff,
-                                            salaryType: e.target.value,
+                                        setStudent({
+                                            ...student,
+                                            courseName: e.target.value,
                                         });
                                         console.log("value", e.target.value);
 
                                     }}
                                 >
-                                    <option value={""}>--select a Salary type --</option>
-                                    {salaryTypeList.map((ele) => (
+                                    <option value={""}>--select Course --</option>
+                                    {courseList.map((ele) => (
                                         <option key={ele} value={ele}>
                                             {ele}
                                         </option>
@@ -149,44 +171,38 @@ function Edit(props: {
 
 
                             <div className="md:col-span-5">
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Designation *</label>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department *</label>
 
                                 <select
                                     name="salary_type"
                                     id="salary_type"
                                     className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                    value={staff.designation}
+                                    value={student.department}
                                     onChange={(e) => {
-                                        setStaff({
-                                            ...staff,
-                                            designation: e.target.value,
+                                        setStudent({
+                                            ...student,
+                                            department: e.target.value,
                                         });
                                         console.log("value", e.target.value);
 
                                     }}
                                 >
-                                    <option value={""}>--select a designation --</option>
-                                    {designationList.map((ele) => (
-                                        <option key={ele.value} value={ele.value}>
-                                            {ele.label}
+                                    <option value={""}>--select department --</option>
+                                    {department.map((ele) => (
+                                        <option key={ele} value={ele}>
+                                            {ele}
                                         </option>
                                     ))}
-
 
 
                                 </select>
 
 
-                                {staff.designation == "other" ?
-                                    <input
-                                        value={otherdesignation}
-                                        onChange={(e: any) => {
-                                            setOtherDesgination(e.target.value)
-                                        }}
-                                        placeholder="Enter the designation"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                                    : ""}
                             </div>
+
+
+
+
 
 
                             <div className="md:col-span-5">
@@ -195,19 +211,29 @@ function Edit(props: {
                                 <input
                                     type="date"
                                     className={`p-2 border rounded w-full`}
-                                    value={staff.dob}
-                                    onChange={(e) => { setStaff({ ...staff, dob: e.target.value }) }}
+                                    value={student.dob}
+                                    onChange={(e) => { setStudent({ ...student, dob: e.target.value }) }}
                                 />
                             </div>
 
                             <div className="md:col-span-5">
-                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date Of Joining *</label>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date Of admission *</label>
 
                                 <input
                                     type="date"
                                     className={`p-2 border rounded w-full`}
-                                    value={staff.date_of_joining}
-                                    onChange={(e) => { setStaff({ ...staff, date_of_joining: e.target.value }) }}
+                                    value={student.admisionDate}
+                                    onChange={(e) => { setStudent({ ...student, admisionDate: e.target.value }) }}
+                                />
+                            </div>
+                            <div className="md:col-span-5">
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valid upto *</label>
+
+                                <input
+                                    type="date"
+                                    className={`p-2 border rounded w-full`}
+                                    value={student.vallidDate}
+                                    onChange={(e) => { setStudent({ ...student, vallidDate: e.target.value }) }}
                                 />
                             </div>
 
@@ -215,7 +241,7 @@ function Edit(props: {
 
                             <button
                                 onClick={handleSubmitButton}
-                                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit staff</button>
+                                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit student</button>
 
                         </form>
                     </div>

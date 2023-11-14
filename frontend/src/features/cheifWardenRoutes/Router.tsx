@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import { UserAuthContextProvider, useUserAuth } from '../context/UserAuthContext';
 import Layout from "../../component/Layout/Index"
 import Hall from "../hall/Router"
-import Staff from "../staff/Router"
+import Student from "../student/Router"
 import HallDetails from "../hallDetailsPage/Router"
 
 import Dashboard from "../chiefWardenDashboard/Router"
@@ -42,7 +42,7 @@ function Others() {
                 <Route path='/dashboard' element={<Dashboard />}></Route>
                 <Route path='/hall-management' element={<Hall/>}></Route>
                 <Route path='/hall-management/:id' element={<HallDetails/>}></Route>
-                <Route path='/staff-management' element={<Staff/>}></Route>
+                <Route path='/student-list' element={<Student/>}></Route>
                     
                     
                 </Routes>
