@@ -10,8 +10,8 @@ exports.wardenLogin = async (req, res) => {
 
         const { email, password } = req.body;
 
-        //   console.log(email)
-        //   console.log(password)
+        console.log(email)
+        console.log(password)
 
         //finding  email in database
         let sa = await find_hall({ wardenEmail: email })
@@ -38,7 +38,7 @@ exports.wardenLogin = async (req, res) => {
 
 
         // comaparing password
-        const check = await bcrypt.compare(password, sa.wardenPassowrd);
+        const check = await bcrypt.compare(password, sa.wardenPassword);
 
         // if passsowrd doesn't match
         if (!check) {
@@ -68,10 +68,10 @@ exports.wardenLogin = async (req, res) => {
 
 exports.passwordSet = async (req, res) => {
     try {
-        const { wardenPassowrd } = req.body
-        const cryptedPassword = await bcrypt.hash(wardenPassowrd, 12);
+        const { wardenPassword, _id } = req.body
+        const cryptedPassword = await bcrypt.hash(wardenPassword, 12);
 
-        const data = await update_hall({ wardenPassowrd: cryptedPassword })
+        const data = await update_hall({ _id: _id, wardenPassword: cryptedPassword })
         if (!data) {
             return res.send({ code: 400, data: data.reverse(), message: "cannot set password" })
 
@@ -114,7 +114,7 @@ exports.getAllHallRoomEmpty = async (req, res) => {
             hallList.push({
                 ...hall,
                 noOfEmptyRooms: emptyRoom,
-                noOfAlloted:0
+                noOfAlloted: 0
             })
         }
 
@@ -123,6 +123,7 @@ exports.getAllHallRoomEmpty = async (req, res) => {
         return res.send({ code: 500, message: "Error" + error })
     }
 }
+
 exports.getHall = async (req, res) => {
     try {
         const { id } = req.params
@@ -151,7 +152,7 @@ exports.postAddHall = async (req, res) => {
             gallery,
             date_time,
             wardenEmail,
-            wardenPassowrd,
+            wardenPassword,
             generalSecretory,
             sportSecretary,
             culuralSecretary,
@@ -173,7 +174,7 @@ exports.postAddHall = async (req, res) => {
             gallery: gallery,
             date_time: date_time,
             wardenEmail: wardenEmail,
-            wardenPassowrd: wardenPassowrd,
+            wardenPassword: wardenPassword,
             generalSecretory: generalSecretory,
             sportSecretary: sportSecretary,
             culuralSecretary: culuralSecretary,
@@ -209,7 +210,7 @@ exports.postEditHall = async (req, res) => {
             gallery,
             date_time,
             wardenEmail,
-            wardenPassowrd,
+            wardenPassword,
             generalSecretory,
             sportSecretary,
             culuralSecretary,
@@ -235,7 +236,7 @@ exports.postEditHall = async (req, res) => {
             gallery: gallery,
             date_time: date_time,
             wardenEmail: wardenEmail,
-            wardenPassowrd: wardenPassowrd,
+            wardenPassword: wardenPassword,
             generalSecretory: generalSecretory,
             sportSecretary: sportSecretary,
             culuralSecretary: culuralSecretary,

@@ -14,32 +14,40 @@ import {
   MdRecordVoiceOver,
   MdAccessibilityNew,
   MdAccountBox,
-  MdAddHome
+  MdAddHome,
+  MdHome
 
 } from "react-icons/md";
 
 export const hall_navigations = [
-  // {
-  //   name: "Main Dashboard",
-  //   path: "/admin/dashboard",
-  //   icon: <MdHome className="h-6 w-6" />,
-  
-  // },
-  // {
-  //   name: "Student List",
-  //   // layout: "/admin",
-  //   path: "/admin/student-list",
-  //   icon: <MdAccessibilityNew className="h-6 w-6" />,
-  //   secondary: true,
-  // },
-  // {
-  //   name: "Ticket Raise",
-  //   // layout: "/admin",
-  //   icon: <MdRecordVoiceOver className="h-6 w-6" />,
-  //   path: "/admin/ticket-raise",
-  // },
- 
- 
+  {
+    name: "Hall Details",
+    path: "/warden/dashboard",
+    icon: <MdHome className="h-6 w-6" />,
+
+  },
+  {
+    name: "Student List",
+    // layout: "/admin",
+    path: "/warden/student-list",
+    icon: <MdAccessibilityNew className="h-6 w-6" />,
+    secondary: true,
+  },
+  {
+    name: "Room allotment",
+    // layout: "/admin",
+    icon: <MdRecordVoiceOver className="h-6 w-6" />,
+    path: "/warden/room-allotment",
+
+  },
+  {
+    name: "Room Change Request",
+    // layout: "/admin",
+    icon: <MdRecordVoiceOver className="h-6 w-6" />,
+    path: "/admin/t",
+  },
+
+
 ];
 
 export const superAdmin_navigations = [
@@ -71,15 +79,15 @@ export const superAdmin_navigations = [
     icon: <MdAddHome className="h-6 w-6" />,
     secondary: true,
   },
- 
+
 ];
 export const mess_navigations = [
- 
- 
+
+
 ];
 export const student_navigations = [
 
- 
+
 ];
 
- 
+

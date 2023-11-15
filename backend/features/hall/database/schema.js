@@ -18,7 +18,7 @@ const schema = mongoose.Schema(
         wardenEmail: {
             type: String
         },
-        wardenPassowrd: {
+        wardenPassword: {
             type: String
         },
         generalSecretory: {

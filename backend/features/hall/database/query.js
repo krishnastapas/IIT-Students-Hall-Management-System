@@ -18,7 +18,7 @@ exports.find_all_hall = async () => {
                 gallery: data[i].gallery,
                 date_time: data[i].date_time,
                 wardenEmail: data[i].wardenEmail,
-                wardenPassowrd: data[i].wardenPassowrd,
+                wardenPassword: data[i].wardenPassword,
                 generalSecretory: data[i].generalSecretory,
                 sportSecretary: data[i].sportSecretary,
                 culuralSecretary: data[i].culuralSecretary,
@@ -33,14 +33,14 @@ exports.find_all_hall = async () => {
     return []
 
 }
-exports.find_hall = async ({ _id ,wardenEmail}) => {
+exports.find_hall = async ({ _id, wardenEmail }) => {
 
     let data
-    if(_id){
+    if (_id) {
 
         data = await db.findOne({ _id: _id });
-    } 
-    if(wardenEmail){
+    }
+    if (wardenEmail) {
         data = await db.findOne({ wardenEmail: wardenEmail });
 
     }
@@ -58,7 +58,7 @@ exports.find_hall = async ({ _id ,wardenEmail}) => {
             gallery: data.gallery,
             date_time: data.date_time,
             wardenEmail: data.wardenEmail,
-            wardenPassowrd: data.wardenPassowrd,
+            wardenPassword: data.wardenPassword,
             generalSecretory: data.generalSecretory,
             sportSecretary: data.sportSecretary,
             culuralSecretary: data.culuralSecretary,
@@ -83,7 +83,7 @@ exports.create_hall = async ({
     gallery,
     date_time,
     wardenEmail,
-    wardenPassowrd,
+    wardenPassword,
     generalSecretory,
     sportSecretary,
     culuralSecretary,
@@ -104,7 +104,7 @@ exports.create_hall = async ({
             gallery: gallery,
             date_time: date_time,
             wardenEmail: wardenEmail,
-            wardenPassowrd: wardenPassowrd,
+            wardenPassword: wardenPassword,
             generalSecretory: generalSecretory,
             sportSecretary: sportSecretary,
             culuralSecretary: culuralSecretary,
@@ -127,7 +127,7 @@ exports.create_hall = async ({
             gallery: data.gallery,
             date_time: data.date_time,
             wardenEmail: data.wardenEmail,
-            wardenPassowrd: data.wardenPassowrd,
+            wardenPassword: data.wardenPassword,
             generalSecretory: data.generalSecretory,
             sportSecretary: data.sportSecretary,
             culuralSecretary: data.culuralSecretary,
@@ -152,7 +152,7 @@ exports.update_hall = async ({
     gallery,
     date_time,
     wardenEmail,
-    wardenPassowrd,
+    wardenPassword,
     generalSecretory,
     sportSecretary,
     culuralSecretary,
@@ -161,6 +161,8 @@ exports.update_hall = async ({
     password
 }) => {
 
+    console.log(wardenPassword)
+    console.log(_id)
     const data = await db.updateOne({ _id: _id }, {
         image: image,
         name: name,
@@ -172,7 +174,7 @@ exports.update_hall = async ({
         gallery: gallery,
         date_time: date_time,
         wardenEmail: wardenEmail,
-        wardenPassowrd: wardenPassowrd,
+        wardenPassword: wardenPassword,
         generalSecretory: generalSecretory,
         sportSecretary: sportSecretary,
         culuralSecretary: culuralSecretary,

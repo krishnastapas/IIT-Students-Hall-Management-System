@@ -6,7 +6,7 @@ import Layout from "../../component/Layout/Index"
 import Hall from "../hall/Router"
 import Student from "../student/Router"
 import HallDetails from "../hallDetailsPage/Router"
-import Mess from "../mess/Router"
+import RoomAllotment from "../roomAllotment/Router"
 
 import Dashboard from "../wardenDashboard/Router"
 function Main() {
@@ -41,8 +41,8 @@ function Others() {
                 <Layout>
                     <Routes>
                         <Route path='/dashboard' element={<Dashboard />}></Route>
-                        {/* <Route path='/hall-management' element={<Hall />}></Route> */}
-                        {/* <Route path='/hall-management/:id' element={<HallDetails />}></Route> */}
+                        <Route path='/room-allotment' element={<RoomAllotment />}></Route>
+                        <Route path='/hall-management/:id' element={<HallDetails />}></Route>
                         {/* <Route path='/student-list' element={<Student />}></Route> */}
                         {/* <Route path='/mess-list' element={<Mess />}></Route> */}
 

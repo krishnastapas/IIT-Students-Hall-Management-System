@@ -5,7 +5,7 @@ export interface RoomInterface {
     hallId: string,
     blockId: string,
     noOfBeds: number,
-    noOfStudent: boolean,
+    noOfStudent: number,
     studentId: string,
     price?:number ,
     floor:number

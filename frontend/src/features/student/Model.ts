@@ -15,5 +15,6 @@ export interface StudentInterface {
     hallId?: string,
     blockId?: string,
     roomId?: string,
+    roomName?: string,
     messId?: string,
 }

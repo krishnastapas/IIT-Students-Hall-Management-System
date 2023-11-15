@@ -18,7 +18,7 @@ function Add(props: {
         name: "",
         date_time: "",
         blockId: props.block._id ?? "",
-        noOfStudent: true,
+        noOfStudent: 0,
         noOfBeds: 0,
         studentId: "",
         floor: 0
@@ -147,7 +147,7 @@ function Add(props: {
                                     }}
                                     type="number" name="name" id="email"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                    placeholder="Enter no of Floors" required />
+                                    placeholder="Enter no of beds" required />
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rent Price *</label>

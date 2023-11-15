@@ -33,9 +33,9 @@ function HallCard(props: { hallList: HallInterface[] }) {
                     <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                       {hall.noOfEmptyRooms}
                     </div>
-                    {/* <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                    <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                       {hall.noOfAlloted}
-                    </div> */}
+                    </div>
                   </div>
                 </li>
               )
