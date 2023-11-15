@@ -41,79 +41,31 @@ exports.find_all_student_hall_not_alloted = async () => {
 
     let data = await db.find({
         $and: [
-            { $or: [
-              { hallId: { $exists: false } },
-              { hallId: { $eq: null } },
-              { hallId: { $eq: "" } },
-              { hallId: { $eq: " " } }
-            ]},
-            { $or: [
-              { roomId: { $exists: false } },
-              { roomId: { $eq: null } },
-              { roomId: { $eq: "" } , },
-              { roomId: { $eq: " " } , }
-            ]},
-            { $or: [
-              { messId: { $exists: false } },
-              { messId: { $eq: null } },
-              { messId: { $eq: "" } },
-              { messId: { $eq: " " } }
-            ]}
-          ]
-    })
-
-    const res = []
-    if (data.length) {
-        for (let i = 0; i < data.length; i++) {
-            res.push({
-                _id: data[i]._id,
-                rollNumber: data[i].rollNumber,
-                courseName: data[i].courseName,
-                department: data[i].department,
-                admisionDate: data[i].admisionDate,
-                vallidDate: data[i].vallidDate,
-                name: data[i].name,
-                email: data[i].email,
-                address: data[i].address,
-                phoneNumber: data[i].phoneNumber,
-                password: data[i].password,
-                dob: data[i].dob,
-                date_time: data[i].date_time,
-                roomId: data[i].roomId,
-                blockId: data[i].blockId,
-                hallId: data[i].hallId,
-                messId: data[i].messId,
-                messRecord: data[i].messRecord,
-                hallRecord: data[i].hallRecord,
-
-            })
-        }
-
-        return res;
-    }
-    return []
-
-}
-
-exports.find_all_student_room_not_alloted = async () => {
-
-    let data = await db.find({
-        $and: [
             {
-              $or: [
-                { roomId: { $exists: false } },
-                { roomId: { $eq: null } },
-                { roomId: { $eq: "" } }
-              ]
+                $or: [
+                    { hallId: { $exists: false } },
+                    { hallId: { $eq: null } },
+                    { hallId: { $eq: "" } },
+                    { hallId: { $eq: " " } }
+                ]
             },
             {
-              $or: [
-                { blockId: { $exists: false } },
-                { blockId: { $eq: null } },
-                { blockId: { $eq: "" } }
-              ]
+                $or: [
+                    { roomId: { $exists: false } },
+                    { roomId: { $eq: null } },
+                    { roomId: { $eq: "" }, },
+                    { roomId: { $eq: " " }, }
+                ]
+            },
+            {
+                $or: [
+                    { messId: { $exists: false } },
+                    { messId: { $eq: null } },
+                    { messId: { $eq: "" } },
+                    { messId: { $eq: " " } }
+                ]
             }
-          ]
+        ]
     })
 
     const res = []
@@ -148,6 +100,66 @@ exports.find_all_student_room_not_alloted = async () => {
     return []
 
 }
+
+exports.find_all_student_room_not_alloted = async ({ hallId }) => {
+
+    console.log(hallId)
+
+    let data = await db.find({
+        hallId: hallId,
+        $and: [
+            {
+                $or: [
+                    { roomId: { $exists: false } },
+                    { roomId: { $eq: null } },
+                    { roomId: { $eq: "" } },
+                    { roomId: { $eq: " " } }
+                ]
+            },
+            {
+                $or: [
+                    { blockId: { $exists: false } },
+                    { blockId: { $eq: null } },
+                    { blockId: { $eq: "" } },
+                    { blockId: { $eq: " " } }
+                ]
+            }
+        ]
+    })
+
+    const res = []
+    if (data.length) {
+        for (let i = 0; i < data.length; i++) {
+            res.push({
+                _id: data[i]._id,
+                rollNumber: data[i].rollNumber,
+                courseName: data[i].courseName,
+                department: data[i].department,
+                admisionDate: data[i].admisionDate,
+                vallidDate: data[i].vallidDate,
+                name: data[i].name,
+                email: data[i].email,
+                address: data[i].address,
+                phoneNumber: data[i].phoneNumber,
+                password: data[i].password,
+                dob: data[i].dob,
+                date_time: data[i].date_time,
+                roomId: data[i].roomId,
+                blockId: data[i].blockId,
+                hallId: data[i].hallId,
+                messId: data[i].messId,
+                messRecord: data[i].messRecord,
+                hallRecord: data[i].hallRecord,
+
+            })
+        }
+
+        return res;
+    }
+    return []
+
+}
+
 exports.find_student = async ({ _id, email }) => {
 
     let data

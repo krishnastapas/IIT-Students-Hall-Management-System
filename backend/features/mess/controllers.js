@@ -9,12 +9,13 @@ exports.messLogin = async (req, res) => {
 
     const { email, password } = req.body;
 
-    //   console.log(email)
-    //   console.log(password)
+    console.log(email)
+    console.log(password)
 
     //finding superadmin email in database
-    let sa = await find_mess({ email:email })
+    let sa = await find_mess({ email: email })
 
+    console.log(sa)
     if (!sa) {
       return res.send({
         code: 400,
@@ -23,7 +24,7 @@ exports.messLogin = async (req, res) => {
       });
     }
 
-  
+
 
     // comaparing password
     const check = await bcrypt.compare(password, sa.password);
@@ -48,7 +49,7 @@ exports.messLogin = async (req, res) => {
       email: sa.email,
       permissionNo: 4000,
     }
-    
+
     res.send({ code: 200, data: { userInfo: messData, jwtToken: token }, message: "mess Warden logged in" });
   } catch (error) {
     res.send({ code: 500, message: error.message });
@@ -57,18 +58,21 @@ exports.messLogin = async (req, res) => {
 
 exports.passwordSet = async (req, res) => {
   try {
-      const { password } = req.body
-      const data = await update_mess({ password: password })
-      if (!data) {
-          return res.send({ code: 400, data: data.reverse(), message: "cannot set password" })
+    const { _id, password } = req.body
 
+    const cryptedPassword = await bcrypt.hash(password, 12);
 
-      }
-      return res.send({ code: 200, message: "password set succesfully" })
-
+    const data = await update_mess({ _id, _id, password: cryptedPassword })
+    if (!data) {
       return res.send({ code: 400, data: data.reverse(), message: "cannot set password" })
+
+
+    }
+    return res.send({ code: 200, message: "password set succesfully" })
+
+    return res.send({ code: 400, data: data.reverse(), message: "cannot set password" })
   } catch (error) {
-      return res.send({ code: 500, message: "Error" + error })
+    return res.send({ code: 500, message: "Error" + error })
   }
 }
 // exports.messLoggout = async (req, res) => {

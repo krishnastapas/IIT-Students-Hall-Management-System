@@ -4,6 +4,7 @@ const { find_all_student, create_student, update_student, delete_student, find_s
 const bcrypt = require("bcrypt");
 const { delete_login_session, create_login_session } = require("../login_session/database/query");
 const { findMessWithHallId } = require("../mess/database/query");
+const { find_room, update_room } = require("../room/database/query");
 
 exports.studentLogin = async (req, res) => {
     try {
@@ -100,11 +101,14 @@ exports.getAllStudentHallNotAlloted = async (req, res) => {
 
 exports.getAllStudentRoomNotAlloted = async (req, res) => {
     try {
-        let roomId = req.query.roomId;
-        let hallId = req.query.hallId;
-        let blockId = req.query.blockId;
+        // let roomId = req.query.roomId;
+        // let hallId = req.query.hallId;
+        // let blockId = req.query.blockId;
 
-        const data = await find_all_student_room_not_alloted();
+        const { hallId } = req.params;
+        console.log(hallId)
+
+        const data = await find_all_student_room_not_alloted({ hallId: hallId });
         console.log(data)
 
         return res.send({ code: 200, data: data.reverse(), message: "Data fetched succesfully" })
@@ -196,6 +200,36 @@ exports.allotHallStudents = async (req, res) => {
             const mess = await findMessWithHallId({ hallId: studentList[i].hallId });
             console.log(mess)
             const data = update_student({ ...studentList[i], messId: mess._id });
+
+            if (!data) {
+                return res.send({ code: 400, message: "Cannot Update the Student" })
+            }
+        }
+
+        return res.send({ code: 200, message: "Alloted SuccessFully ." })
+
+    } catch (error) {
+        return res.send({ code: 500, message: "Error" + error })
+    }
+
+}
+
+exports.allotRoomStudents = async (req, res) => {
+    try {
+
+        // console.log("Inside Post Student Api.....")
+        const { studentList } = req.body
+
+        if (!studentList) {
+            return res.send({ code: 400, message: "Student list not found." })
+        }
+        for (let i = 0; i < studentList.length; i++) {
+
+            const room = await find_room({ _id: studentList[i].roomId });
+            if (room) {
+                await update_room({ _id: room._id, noOfStudent: room.noOfStudent + 1 })
+            }
+            const data = await update_student(studentList[i]);
 
             if (!data) {
                 return res.send({ code: 400, message: "Cannot Update the Student" })

@@ -121,3 +121,29 @@ exports.deleteRoom = async (req, res) => {
         return res.send({ code: 500, message: error.message })
     }
 }
+
+exports.emptyRoomList = async (req, res) => {
+    try {
+        const { hallId } = req.params;
+
+        const data = await find_all_room({ hallId: hallId });
+        if (!data) {
+            return res.send({ code: 400, message: "Cannot read the room." })
+        }
+        // console.log(data.length)
+        const roomList = []
+        let totalRooms = 0;
+        for (let i = 0; i < data.length; i++) {
+            if (!data[i].noOfStudent || data[i].noOfBeds > data[i].noOfStudent) {
+                roomList.push(data[i]);
+                totalRooms += data[i].noOfBeds - data[i].noOfStudent;
+
+            }
+        }
+
+        // console.log(roomList.length)
+        return res.send({ code: 200, data: { roomList: roomList, totalRooms: totalRooms }, message: "Room fetched Successfully." })
+    } catch (error) {
+        return res.send({ code: 500, message: error.message })
+    }
+}

@@ -32,7 +32,7 @@ const schema = mongoose.Schema(
             default: ""
         },
         price: {
-            type: String,
+            type: Number,
         },
         date_time: {
             type: String

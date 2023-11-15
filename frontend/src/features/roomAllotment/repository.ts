@@ -2,13 +2,13 @@ import { showMessage } from "../../utils/alert";
 import { getJwtToken } from "../../utils/function";
 import { responseInterface } from "../Model";
 import axios from "../axios";
-import { HallInterface } from "../hall/Model";
+import { StudentInterface } from "../student/Model";
 
-export const readHall = async (id:string) => {
+export const readEmptyRoomList = async (hallId: string) => {
 
     try {
 
-        const path = "/hall/"+id;
+        const path = "/room-empty-list/" + hallId;
 
         let accessToken = getJwtToken()
 
@@ -23,43 +23,71 @@ export const readHall = async (id:string) => {
 
         if (response.data.code === 200) {
             // console.log("response", response.data.data)
-            return res.data as HallInterface
+            return res.data
         }
 
         showMessage({ message: response.data.message })
-        return null
+        return []
 
     } catch (error) {
         showMessage({ message: error })
-        return null;
+        return [];
 
     }
 }
 
-export const passwordSetApi = async (hall: HallInterface) => {
+export const readStudentList = async (hallId:string) => {
+    try {
 
-    let path = `/hall-password-set`
+        const path = "/student-room-not-alloted/"+hallId;
 
-    let payload = {
-        _id:hall._id,
-        wardenPassowrd:hall.wardenPassowrd
+        let accessToken = getJwtToken()
+
+        const response = await axios.get(path, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        // console.log(response);
+        const res = response.data as responseInterface;
+
+        if (response.data.code === 200) {
+            // console.log("response", response.data.data)
+            return res.data
+        }
+
+        showMessage({ message: response.data.message })
+        return []
+
+    } catch (error) {
+        showMessage({ message: error })
+        return [];
+
     }
+}
 
+
+export const allotRoomToStudent = async (studentList: StudentInterface[]) => {
+
+    let path = `/student-room-allot`
+    let payload = { "studentList": studentList }
+
+
+    // console.log(payload)
     let accessToken = getJwtToken();
-   
-    
+
 
     try {
 
         const response = await axios.post(path, payload, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-
             }
         });
 
         console.log(response)
-        const res = response.data as responseInterface
+        const res = response.data as responseInterface;
         if (response.data.code === 200) {
             showMessage({ message: res.message, status: res.code });
             return true;
@@ -67,7 +95,6 @@ export const passwordSetApi = async (hall: HallInterface) => {
 
         showMessage({ message: res.message, status: res.code })
         return false;
-        // return []
 
     } catch (error) {
         showMessage({ message: error })

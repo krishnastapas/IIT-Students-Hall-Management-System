@@ -22,7 +22,7 @@ export default function WardenLogin() {
     if (res?.code == 200) {
       authLogIn(res.data.userInfo);
       SetJwtToken(res.data.jwtToken);
-      if(res.data.userInfo.permissionNo==1000){
+      if(res.data.userInfo.permissionNo==2000){
         navigate("/warden/dashboard")
       }
       // navigate("/super-admin/student-list");

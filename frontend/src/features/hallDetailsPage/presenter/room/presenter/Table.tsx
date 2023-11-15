@@ -39,8 +39,14 @@ function Table(props: {
                         <div className="flex flex-wrap">
                             {props.roomList.map((room) => {
                                 if (room.floor == index) {
+                                    let color: string = "#f2f2f2"
+                                    if (room.noOfBeds == room.noOfStudent) {
+                                        color = "#4caf50"
+                                    } else if (room.noOfStudent >= 1) {
+                                        color = "#ffd700"
+                                    }
                                     return (
-                                        <div className="relative box-content h-7 w-9 p-4 border-4">
+                                        <div className="relative box-content h-7 w-9 p-4 border-4 " style={{ backgroundColor: color }}>
                                             <button className="absolute top-0 right-0 p-1 text-red-500" onClick={() => {
                                                 onClickCross(room)
                                             }}>
