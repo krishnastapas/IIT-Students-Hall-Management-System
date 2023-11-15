@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { HallInterface } from '../../hall/Model'
 import { editHall } from '../../hall/repository'
+import PasswordSet from './PasswordChange'
+import { readHall } from '../repository'
 
 function Profile(
   props: {
@@ -10,15 +12,16 @@ function Profile(
 ) {
 
   const [hall,
-     setHall] = useState<HallInterface>(props.hall)
+    setHall] = useState<HallInterface>(props.hall)
 
+  const [showModal, setShowModal] = useState("");
 
-     const handleEditHall=async()=>{
-      const data=await editHall(hall);
-      if(data){
-        props.fetchHall()
-      }
-     }
+  const handleEditHall = async () => {
+    const data = await editHall(hall);
+    if (data) {
+      props.fetchHall()
+    }
+  }
 
   useEffect(() => {
     setHall(props.hall)
@@ -57,14 +60,14 @@ function Profile(
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Warden Name</label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input 
-                    type="text" 
-                    name="username" 
-                    value={hall.warden_incharge}
-                    onChange={(e: any) => {
-                      setHall({ ...hall, warden_incharge: e.target.value })
-                    }}
-                    id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Warden Name" />
+                    <input
+                      type="text"
+                      name="username"
+                      value={hall.warden_incharge}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, warden_incharge: e.target.value })
+                      }}
+                      id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Warden Name" />
                   </div>
                 </div>
               </div>
@@ -73,18 +76,20 @@ function Profile(
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Warden Email</label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input type="email" 
-                     value={hall.wardenEmail}
-                     onChange={(e: any) => {
-                       setHall({ ...hall, wardenEmail: e.target.value })
-                     }}
-                     name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Warden Email" />
+                    <input type="email"
+                      value={hall.wardenEmail}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, wardenEmail: e.target.value })
+                      }}
+                      name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Warden Email" />
                   </div>
 
                 </div>
               </div>
 
-              <button type="button" style={{ height: "35px", width: "140px" }} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Set Password</button>
+              <button type="button" 
+              onClick={()=>setShowModal("password")}
+              style={{ height: "35px", width: "140px" }} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Set Password</button>
 
 
 
@@ -101,13 +106,13 @@ function Profile(
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Care Taker Name</label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input 
-                    type="text" 
-                    value={hall.care_taker}
-                    onChange={(e: any) => {
-                      setHall({ ...hall, care_taker: e.target.value })
-                    }}
-                    name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Name.." />
+                    <input
+                      type="text"
+                      value={hall.care_taker}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, care_taker: e.target.value })
+                      }}
+                      name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Name.." />
                   </div>
                 </div>
               </div>
@@ -119,10 +124,10 @@ function Profile(
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
-                     value={hall.generalSecretory}
-                     onChange={(e: any) => {
-                       setHall({ ...hall,generalSecretory: e.target.value })
-                     }}
+                      value={hall.generalSecretory}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, generalSecretory: e.target.value })
+                      }}
                       name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Enter name" />
                   </div>
 
@@ -136,11 +141,11 @@ function Profile(
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input 
-                     value={hall.culuralSecretary}
-                     onChange={(e: any) => {
-                       setHall({ ...hall,culuralSecretary: e.target.value })
-                     }}
+                    <input
+                      value={hall.culuralSecretary}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, culuralSecretary: e.target.value })
+                      }}
                       name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Enter name" />
                   </div>
 
@@ -155,10 +160,10 @@ function Profile(
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input type="name"
-                     value={hall.environmentalSecretory}
-                     onChange={(e: any) => {
-                       setHall({ ...hall,environmentalSecretory: e.target.value })
-                     }}
+                      value={hall.environmentalSecretory}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, environmentalSecretory: e.target.value })
+                      }}
                       name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Enter name" />
                   </div>
 
@@ -172,10 +177,10 @@ function Profile(
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input type="name"
-                     value={hall.maintainanceSecretory}
-                     onChange={(e: any) => {
-                       setHall({ ...hall,maintainanceSecretory: e.target.value })
-                     }}
+                      value={hall.maintainanceSecretory}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, maintainanceSecretory: e.target.value })
+                      }}
                       name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Enter name" />
                   </div>
 
@@ -189,10 +194,10 @@ function Profile(
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input type="name"
-                     value={hall.sportSecretary}
-                     onChange={(e: any) => {
-                       setHall({ ...hall,sportSecretary: e.target.value })
-                     }}
+                      value={hall.sportSecretary}
+                      onChange={(e: any) => {
+                        setHall({ ...hall, sportSecretary: e.target.value })
+                      }}
                       name="username" id="username" className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Enter name" />
                   </div>
 
@@ -210,11 +215,16 @@ function Profile(
         <div className="mt-6 flex items-center justify-end gap-x-6">
           {/* <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button> */}
           <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          onClick={handleEditHall}
+            onClick={handleEditHall}
           >Save</button>
         </div>
       </form>
 
+      {showModal == "password" ?
+        <PasswordSet
+          hall={hall}
+          onClose={() => setShowModal("")}
+        /> : ""}
     </div>
   )
 }

@@ -1,8 +1,9 @@
 const db = require("./schema")
 
-exports.find_all_student = async () => {
+exports.find_all_student = async ({ roomId, blockId, hallId }) => {
 
-    const data = await db.find();
+    let data = await db.find();
+
     const res = []
     if (data.length) {
         for (let i = 0; i < data.length; i++) {
@@ -23,6 +24,122 @@ exports.find_all_student = async () => {
                 roomId: data[i].roomId,
                 blockId: data[i].blockId,
                 hallId: data[i].hallId,
+                messId: data[i].messId,
+                messRecord: data[i].messRecord,
+                hallRecord: data[i].hallRecord,
+
+            })
+        }
+
+        return res;
+    }
+    return []
+
+}
+
+exports.find_all_student_hall_not_alloted = async () => {
+
+    let data = await db.find({
+        $and: [
+            { $or: [
+              { hallId: { $exists: false } },
+              { hallId: { $eq: null } },
+              { hallId: { $eq: "" } },
+              { hallId: { $eq: " " } }
+            ]},
+            { $or: [
+              { roomId: { $exists: false } },
+              { roomId: { $eq: null } },
+              { roomId: { $eq: "" } , },
+              { roomId: { $eq: " " } , }
+            ]},
+            { $or: [
+              { messId: { $exists: false } },
+              { messId: { $eq: null } },
+              { messId: { $eq: "" } },
+              { messId: { $eq: " " } }
+            ]}
+          ]
+    })
+
+    const res = []
+    if (data.length) {
+        for (let i = 0; i < data.length; i++) {
+            res.push({
+                _id: data[i]._id,
+                rollNumber: data[i].rollNumber,
+                courseName: data[i].courseName,
+                department: data[i].department,
+                admisionDate: data[i].admisionDate,
+                vallidDate: data[i].vallidDate,
+                name: data[i].name,
+                email: data[i].email,
+                address: data[i].address,
+                phoneNumber: data[i].phoneNumber,
+                password: data[i].password,
+                dob: data[i].dob,
+                date_time: data[i].date_time,
+                roomId: data[i].roomId,
+                blockId: data[i].blockId,
+                hallId: data[i].hallId,
+                messId: data[i].messId,
+                messRecord: data[i].messRecord,
+                hallRecord: data[i].hallRecord,
+
+            })
+        }
+
+        return res;
+    }
+    return []
+
+}
+
+exports.find_all_student_room_not_alloted = async () => {
+
+    let data = await db.find({
+        $and: [
+            {
+              $or: [
+                { roomId: { $exists: false } },
+                { roomId: { $eq: null } },
+                { roomId: { $eq: "" } }
+              ]
+            },
+            {
+              $or: [
+                { blockId: { $exists: false } },
+                { blockId: { $eq: null } },
+                { blockId: { $eq: "" } }
+              ]
+            }
+          ]
+    })
+
+    const res = []
+    if (data.length) {
+        for (let i = 0; i < data.length; i++) {
+            res.push({
+                _id: data[i]._id,
+                rollNumber: data[i].rollNumber,
+                courseName: data[i].courseName,
+                department: data[i].department,
+                admisionDate: data[i].admisionDate,
+                vallidDate: data[i].vallidDate,
+                name: data[i].name,
+                email: data[i].email,
+                address: data[i].address,
+                phoneNumber: data[i].phoneNumber,
+                password: data[i].password,
+                dob: data[i].dob,
+                date_time: data[i].date_time,
+                roomId: data[i].roomId,
+                blockId: data[i].blockId,
+                hallId: data[i].hallId,
+                messId: data[i].messId,
+                messRecord: data[i].messRecord,
+                hallRecord: data[i].hallRecord,
+
             })
         }
 
@@ -60,7 +177,10 @@ exports.find_student = async ({ _id, email }) => {
             roomId: data.roomId,
             blockId: data.blockId,
             hallId: data.hallId,
+            messId: data.messId,
             date_time: data.date_time,
+            hallRecord: data.hallRecord,
+            messRecord: data.messRecord,
         }
     }
 
@@ -83,6 +203,9 @@ exports.create_student = async ({
     roomId,
     blockId,
     hallId,
+    messId,
+    hallRecord,
+    messRecord
 }) => {
 
     const data = await new db(
@@ -103,6 +226,9 @@ exports.create_student = async ({
             roomId: roomId,
             blockId: blockId,
             hallId: hallId,
+            messId: messId,
+            hallRecord: hallRecord,
+            messRecord: messRecord
         }
     ).save();
 
@@ -124,6 +250,8 @@ exports.create_student = async ({
             roomId: data.roomId,
             blockId: data.blockId,
             hallId: data.hallId,
+            hallRecord: data.hallRecord,
+            messRecord: data.messRecord
         }
     }
 
@@ -141,11 +269,16 @@ exports.update_student = async ({
     email,
     address,
     phoneNumber,
+    password,
     dob,
     roomId,
     blockId,
     hallId,
-    date_time, }) => {
+    messId,
+    hallRecord,
+    messRecord,
+    date_time,
+}) => {
 
     const data = await db.updateOne({ _id: _id }, {
         rollNumber: rollNumber,
@@ -155,12 +288,16 @@ exports.update_student = async ({
         vallidDate: vallidDate,
         name: name,
         email: email,
+        password: password,
         address: address,
         phoneNumber: phoneNumber,
         dob: dob,
         roomId: roomId,
         blockId: blockId,
         hallId: hallId,
+        messId: messId,
+        hallRecord: hallRecord,
+        messRecord: messRecord,
         date_time: date_time,
     })
 

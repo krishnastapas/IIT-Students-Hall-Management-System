@@ -1,44 +1,45 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema(
     {
-        hallId:{
-            type:String,
-            required:[true,"Hall id is required"]
+        hallId: {
+            type: String,
+            required: [true, "Hall id is required"]
         },
-        blockId:{
-            type:String,
-            required:[true,"Block id required"]
+        blockId: {
+            type: String,
+            required: [true, "Block id required"]
         },
-        name:{
-            type:String,
+        name: {
+            type: String,
             required: [true, "Name is Required."],
         },
-        floor:{
-            type:Number,
+        floor: {
+            type: Number,
             required: [true, "Floor is Required."],
-            
+
         },
-        noOfBeds:{
-            type:Number,
-            required:[true,"No of beds required"],
+        noOfBeds: {
+            type: Number,
+            required: [true, "No of beds required"],
             min: 1
         },
-        isEmpty:{
-            type:Boolean,
+        noOfStudent: {
+            type: Number,
+            default: 0
         },
-        studentId:{
-            type:String,
-            default:""
+        studentId: {
+            type: String,
+            default: ""
         },
-        status:{
-            type:String,
+        price: {
+            type: String,
         },
         date_time: {
             type: String
         },
-        
+
     }
 );
-schema.index({name:1,hallId:1},{unique:true});
+schema.index({ name: 1, hallId: 1 }, { unique: true });
 
 module.exports = mongoose.model("room", schema)

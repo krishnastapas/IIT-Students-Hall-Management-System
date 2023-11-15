@@ -55,7 +55,7 @@ export const addRoom = async (room: RoomInterface) => {
         console.log(response)
         const res=response.data as responseInterface;
         if (response.data.code === 200) {
-            showMessage({message:res.message,status:res.code});
+            // showMessage({message:res.message,status:res.code});
             return true;
         }
 

@@ -1,18 +1,19 @@
 const { generateToken, decodeToken } = require("../../helpers/tokens");
 const { create_login_session, delete_login_session } = require("../login_session/database/query");
+const { find_no_of_empty_room, find_room, find_all_room } = require("../room/database/query");
 const { find_all_hall, create_hall, update_hall, delete_hall, find_hall } = require("./database/query")
+const bcrypt = require("bcrypt");
 
 
 exports.wardenLogin = async (req, res) => {
     try {
 
-        //   console.log("Inside super admin login controllers.................")
         const { email, password } = req.body;
 
         //   console.log(email)
         //   console.log(password)
 
-        //finding superadmin email in database
+        //finding  email in database
         let sa = await find_hall({ wardenEmail: email })
 
         if (!sa) {
@@ -37,7 +38,7 @@ exports.wardenLogin = async (req, res) => {
 
 
         // comaparing password
-        const check = await bcrypt.compare(password, sa.password);
+        const check = await bcrypt.compare(password, sa.wardenPassowrd);
 
         // if passsowrd doesn't match
         if (!check) {
@@ -65,23 +66,24 @@ exports.wardenLogin = async (req, res) => {
     }
 };
 
-exports.wardenLoggout = async (req, res) => {
+exports.passwordSet = async (req, res) => {
     try {
-        const accesstoken = req.headers['Authorization']
-        const token = decodeToken(accesstoken);
+        const { wardenPassowrd } = req.body
+        const cryptedPassword = await bcrypt.hash(wardenPassowrd, 12);
 
-        // delete the entry with this 
-        const data = await delete_login_session({ accesstoken: token })
+        const data = await update_hall({ wardenPassowrd: cryptedPassword })
         if (!data) {
-            return res.send({ code: 400, message: "Cannot Logout! server Error." })
-        }
+            return res.send({ code: 400, data: data.reverse(), message: "cannot set password" })
 
-        return res.send({ code: 200, message: "Logout successfully." })
+
+        }
+        return res.send({ code: 200, message: "password set succesfully" })
+
+        return res.send({ code: 400, data: data.reverse(), message: "cannot set password" })
     } catch (error) {
-        return res.send({ code: 500, message: error.message })
+        return res.send({ code: 500, message: "Error" + error })
     }
 }
-
 
 // get all section of student
 exports.getAllHall = async (req, res) => {
@@ -90,6 +92,33 @@ exports.getAllHall = async (req, res) => {
         console.log(data)
 
         return res.send({ code: 200, data: data.reverse(), message: "Data fetched succesfully" })
+    } catch (error) {
+        return res.send({ code: 500, message: "Error" + error })
+    }
+}
+
+exports.getAllHallRoomEmpty = async (req, res) => {
+    try {
+        const data = await find_all_hall()
+        console.log(data)
+
+        const hallList = []
+        for (let i = 0; i < data.length; i++) {
+            const hall = data[i];
+            const roomLsts = await find_all_room({ hallId: hall._id });
+            let emptyRoom = 0;
+            for (let r = 0; r < roomLsts.length; r++) {
+                emptyRoom += roomLsts[r].noOfBeds - roomLsts[r].noOfStudent;
+            }
+            console.log(emptyRoom)
+            hallList.push({
+                ...hall,
+                noOfEmptyRooms: emptyRoom,
+                noOfAlloted:0
+            })
+        }
+
+        return res.send({ code: 200, data: hallList, message: "Data fetched succesfully" })
     } catch (error) {
         return res.send({ code: 500, message: "Error" + error })
     }

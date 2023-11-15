@@ -18,25 +18,30 @@ function Add(props: {
         name: "",
         date_time: "",
         blockId: props.block._id ?? "",
-        isEmpty: true,
+        noOfStudent: true,
         noOfBeds: 0,
         studentId: "",
         floor: 0
     }
     const [room, setRoom] = useState<RoomInterface>(initialvalue)
 
+    const [from, setfrom] = useState(0)
+    const [to, setto] = useState(0)
+
     const [otherdesignation, setOtherDesgination] = useState("")
     const handleSubmitButton = async (e: any) => {
         e.preventDefault()
 
-        const data = await addRoom({
-            ...room,
-            name:`${props.block.name}-${(room.floor+1)*100+parseInt(room.name)}`
-        });
-        if (data) {
-            props.getRoomList();
-            props.onClose()
+        // console.log
+        for (let i=from ;i<=to;i++){
+            const data = await addRoom({
+                ...room,
+                name: `${props.block.name}-${(room.floor + 1) * 100 + i}`
+            });
+           
         }
+        
+        props.getRoomList();
 
     }
 
@@ -56,11 +61,11 @@ function Add(props: {
                     </button>
                     <div className="px-6 py-6 lg:px-8">
                         <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">{props.block.name} : Add Room</h3>
-                        
+
                         <form className="space-y-6" action="#">
 
 
-                        <div className="md:col-span-5">
+                            <div className="md:col-span-5">
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Floor *</label>
 
                                 <select
@@ -88,7 +93,7 @@ function Add(props: {
 
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label className="room mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Name *</label>
                                 <input
                                     value={room.name}
@@ -106,8 +111,33 @@ function Add(props: {
                                     placeholder="Name Surname" required />
                                 <label className="room mb-2 text-sm font-medium text-gray-900 dark:text-white">{`${props.block.name}-${(room.floor+1)*100+parseInt(room.name)}`}</label>
 
-                            </div>
+                            </div> */}
 
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room No From *</label>
+                                <input
+                                    value={from}
+                                    onChange={(e: any) => {
+                                        // setRoom({ ...room, noOfBeds: parseInt(e.target.value) })
+                                        setfrom(parseInt(e.target.value))
+                                    }}
+                                    type="number" name="name" id="email"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    placeholder="Enter no of Floors" required />
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To *</label>
+                                <input
+                                    value={to}
+                                    onChange={(e: any) => {
+                                        // setRoom({ ...room, noOfBeds: parseInt(e.target.value) })
+                                        setto(parseInt(e.target.value))
+
+                                    }}
+                                    type="number" name="name" id="email"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    placeholder="Enter no of Floors" required />
+                            </div>
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter No of Beds *</label>
                                 <input
@@ -119,7 +149,17 @@ function Add(props: {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                     placeholder="Enter no of Floors" required />
                             </div>
-
+                            <div>
+                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rent Price *</label>
+                                <input
+                                    value={room.price}
+                                    onChange={(e: any) => {
+                                        setRoom({ ...room, price: parseInt(e.target.value) })
+                                    }}
+                                    type="number" name="name" id="email"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                    placeholder="Enter room rent" required />
+                            </div>
 
 
 

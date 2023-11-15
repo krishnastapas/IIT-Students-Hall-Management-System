@@ -8,7 +8,6 @@ const schema = mongoose.Schema(
         name:{
             type:String,
             required: [true, "Name is Required."],
-            unique : true, 
         },
         noOfFloors:{
             type:Number,
@@ -20,4 +19,6 @@ const schema = mongoose.Schema(
         
     }
 );
+schema.index({ name: 1, hallId: 1 }, { unique: true });
+
 module.exports = mongoose.model("block", schema)

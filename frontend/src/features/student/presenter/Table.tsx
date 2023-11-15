@@ -45,6 +45,7 @@ function Table(props: {
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" className="px-10 py-3">S/No</th>
                             <th scope="col" className="px-10 py-3">Name</th>
                             <th scope="col" className="px-2 py-3"> Roll Number</th>
                             <th scope="col" className="px-2 py-3">Eamil</th>
@@ -72,6 +73,8 @@ function Table(props: {
                         {props.studentList.map((student: StudentInterface, index: number) => {
                             return (
                                 <tr className="border-b dark:border-gray-700">
+                                    <td className="px-10 py-3">{index+1}</td>
+
                                     <th scope="row" className="px-10 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{student.name}</th>
                                     <td className="px-2 py-3">{student.rollNumber}</td>
                                     <td className="px-2 py-3">{student.email}</td>

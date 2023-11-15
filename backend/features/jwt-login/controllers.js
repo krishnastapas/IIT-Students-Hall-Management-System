@@ -6,6 +6,9 @@ const bcrypt = require("bcrypt");
 const { update_jwtToken } = require("../login_session/database/query");
 // const { findAdmin } = require("../admin/database/adminQuery");
 const { findCheifWardenQuery } = require("../cheifWarden/database/query");
+const { find_hall } = require("../hall/database/query");
+const { find_student } = require("../student/database/query");
+const { find_mess } = require("../mess/database/query");
 // const { find_user } = require("../User/database/databaseQuery");
 
 exports.postJwtLogin = async (req, res) => {
@@ -39,6 +42,15 @@ exports.postJwtLogin = async (req, res) => {
         // superadmin
         if (token.permissionNo == 1000) {
             data = await findCheifWardenQuery({ id: token.id })
+        }
+        if (token.permissionNo == 2000) {
+            data = await find_hall({ _id: token.id })
+        }
+        if (token.permissionNo == 3000) {
+            data = await find_student({ _id: token.id })
+        }
+        if (token.permissionNo == 4000) {
+            data = await find_mess({ _id: token.id })
         }
 
         if (!data) {

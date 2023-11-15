@@ -5,7 +5,7 @@ import Links from "./components/Links";
 
 import SidebarCard from "../../components/sidebar/componentsrtl/SidebarCard";
 // import routes from "../../component/Layout/routes";
-import { admin_navigations, superAdmin_navigations } from "../../navigation";
+import {  hall_navigations, mess_navigations, student_navigations, superAdmin_navigations } from "../../navigation";
 import { navigationInterface } from "../../features/Model";
 import { useUserAuth } from "../../features/context/UserAuthContext";
 import { useNavigate } from "react-router-dom";
@@ -21,10 +21,17 @@ const Sidebar = (props: { open: any, onClose: any }) => {
     if (user) {
       if (user.permissionNo == 1000) {
         setNavigations(superAdmin_navigations)
-      }
-      if (user.permissionNo == 3000) {
-        setNavigations(admin_navigations)
-      }
+    }
+
+    if(user.permissionNo==2000){
+        setNavigations(hall_navigations)
+    }
+    if(user.permissionNo==3000){
+        setNavigations(student_navigations)
+    }
+    if(user.permissionNo==4000){
+        setNavigations(mess_navigations)
+    }
     }
 
   }, [])

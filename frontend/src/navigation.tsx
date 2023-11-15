@@ -18,7 +18,7 @@ import {
 
 } from "react-icons/md";
 
-export const admin_navigations = [
+export const hall_navigations = [
   // {
   //   name: "Main Dashboard",
   //   path: "/admin/dashboard",
@@ -57,6 +57,29 @@ export const superAdmin_navigations = [
     icon: <MdAddHome className="h-6 w-6" />,
     secondary: true,
   },
+  {
+    name: "Mess Management",
+    // layout: "/super-admin",
+    path: "/chief-warden/mess-list",
+    icon: <MdAddHome className="h-6 w-6" />,
+    secondary: true,
+  },
+  {
+    name: "Hall Allotment",
+    // layout: "/super-admin",
+    path: "/chief-warden/hall-allotment",
+    icon: <MdAddHome className="h-6 w-6" />,
+    secondary: true,
+  },
  
 ];
+export const mess_navigations = [
+ 
+ 
+];
+export const student_navigations = [
+
+ 
+];
+
  

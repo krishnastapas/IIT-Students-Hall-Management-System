@@ -2,7 +2,9 @@ import React from 'react'
 
 function Index() {
   return (
-    <div>Index</div>
+    <div>
+      chief Waren Dashboard
+    </div>
   )
 }
 

@@ -14,8 +14,11 @@ const schema = mongoose.Schema(
         password: { type: String, required: true },
         dob: { type: String },
         roomId: { type: String },
-        blockId: { type: String },
-        hallId: { type: String },
+        blockId: { type: String, default: " " },
+        hallId: { type: String, default: " " },
+        messId: { type: String, default: " " },
+        messRecord: { type: Array },
+        hallRecord: { type: Array },
         date_time: { type: String },
 
     }

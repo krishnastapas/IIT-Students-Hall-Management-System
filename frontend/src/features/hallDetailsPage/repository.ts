@@ -35,3 +35,42 @@ export const readHall = async (id:string) => {
 
     }
 }
+export const passwordSetApi = async (hall: HallInterface) => {
+
+    let path = `/hall-password-set`
+
+    let payload = {
+        _id:hall._id,
+        wardenPassowrd:hall.wardenPassowrd
+    }
+
+    let accessToken = getJwtToken();
+   
+    
+
+    try {
+
+        const response = await axios.post(path, payload, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+
+            }
+        });
+
+        console.log(response)
+        const res = response.data as responseInterface
+        if (response.data.code === 200) {
+            showMessage({ message: res.message, status: res.code });
+            return true;
+        }
+
+        showMessage({ message: res.message, status: res.code })
+        return false;
+        // return []
+
+    } catch (error) {
+        showMessage({ message: error })
+        // return [];
+    }
+
+}

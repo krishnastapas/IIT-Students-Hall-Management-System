@@ -31,7 +31,7 @@ export function UserAuthContextProvider(props: { children: any }) {
         }
         setUser(undefined);
         SetJwtToken("");
-        navigate("/admin/login")
+        navigate("/login")
     }
 
     async function fetchUser() {

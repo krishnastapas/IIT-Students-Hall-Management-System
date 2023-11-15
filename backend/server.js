@@ -40,32 +40,33 @@ mongoose
 app.use('/api/hall-images/', express.static('uploads/hall-image'));
 
 // jwt login
-app.use("/api",require("./features/jwt-login/routes"))
+app.use("/api", require("./features/jwt-login/routes"))
 
 // login session
-app.use("/api",require("./features/login_session/routes"))
+app.use("/api", require("./features/login_session/routes"))
 
 
-
+// mess
+app.use("/api", require("./features/mess/routes"))
 // superadmin
 app.use("/api", require("./features/cheifWarden/routes"))
 
 
 // staff
-app.use("/api",require("./features/staff/routes"))
+app.use("/api", require("./features/staff/routes"))
 
 // student
-app.use("/api",require("./features/student/routes"))
+app.use("/api", require("./features/student/routes"))
 
 // hall
 
-app.use("/api",require("./features/hall/routes"))
+app.use("/api", require("./features/hall/routes"))
 
 // block
-app.use("/api",require("./features/block/routes"));
+app.use("/api", require("./features/block/routes"));
 
 // room 
-app.use("/api",require("./features/room/routes"))
+app.use("/api", require("./features/room/routes"))
 
 
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -74,7 +75,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Catch-all route to serve the main index.html file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 

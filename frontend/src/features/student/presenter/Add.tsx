@@ -36,13 +36,34 @@ function Add(props: {
     const handleSubmitButton = async (e: any) => {
         e.preventDefault()
 
-        const data = await addStudent(student);
-        if (data) {
-            props.getStudentList();
-            props.onClose()
+        for(let i=0;i<50;i++){
+            const data = await addStudent({...student,
+            name:student.name+i,
+            email:student.email+i+"@gmail.com",
+            rollNumber:student.rollNumber+i,
+            phoneNumber:student.phoneNumber+i
+        });
+           
         }
 
+    
+            props.getStudentList();
+            // props.onClose()
+        
+       
+
     }
+
+    // const handleSubmitButton = async (e: any) => {
+    //     e.preventDefault()
+
+    //     const data = await addStudent(student);
+    //     if (data) {
+    //         props.getStudentList();
+    //         props.onClose()
+    //     }
+
+    // }
 
 
     console.log(student)

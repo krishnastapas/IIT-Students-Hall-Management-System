@@ -34,9 +34,9 @@ exports.postRoom = async (req, res) => {
             hallId,
             blockId,
             noOfBeds,
-            isEmpty,
+            noOfStudent,
             studentId,
-            status,
+            price,
             floor
         } = req.body
 
@@ -48,9 +48,9 @@ exports.postRoom = async (req, res) => {
             hallId: hallId,
             blockId: blockId,
             noOfBeds: noOfBeds,
-            isEmpty: isEmpty,
+            noOfStudent: noOfStudent,
             studentId: studentId,
-            status: status,
+            price: price,
             floor: floor
         });
 
@@ -76,9 +76,9 @@ exports.putRoom = async (req, res) => {
             hallId,
             blockId,
             noOfBeds,
-            isEmpty,
+            noOfStudent,
             studentId,
-            status,
+            price,
             floor
         } = req.body
 
@@ -91,9 +91,9 @@ exports.putRoom = async (req, res) => {
             hallId: hallId,
             blockId: blockId,
             noOfBeds: noOfBeds,
-            isEmpty: isEmpty,
+            noOfStudent: noOfStudent,
             studentId: studentId,
-            status: status,
+            price: price,
             floor: floor
         })
 

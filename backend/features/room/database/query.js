@@ -2,7 +2,13 @@ const db = require("./schema")
 
 exports.find_all_room = async ({ hallId, blockId }) => {
 
-    const data = await db.find({ hallId, blockId });
+    let data
+    if (hallId && blockId)
+        data = await db.find({ hallId, blockId });
+    else if (hallId) {
+        data = await db.find({ hallId: hallId });
+
+    }
     const res = []
     if (data.length) {
         for (let i = 0; i < data.length; i++) {
@@ -13,9 +19,9 @@ exports.find_all_room = async ({ hallId, blockId }) => {
                 hallId: data[i].hallId,
                 blockId: data[i].blockId,
                 noOfBeds: data[i].noOfBeds,
-                isEmpty: data[i].isEmpty,
+                noOfStudent: data[i].noOfStudent,
                 studentId: data[i].studentId,
-                status: data[i].status,
+                price: data[i].price,
                 floor: data[i].floor,
             })
         }
@@ -25,9 +31,56 @@ exports.find_all_room = async ({ hallId, blockId }) => {
     return []
 
 }
-exports.find_room = async ({ _id }) => {
 
-    const data = await db.findOne({ _id: _id });
+exports.find_no_of_empty_room = async ({ hallId }) => {
+
+
+    try {
+        const result = await db.aggregate([
+            {
+                $match: {
+                    hallId: hallId
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    bedDifferenceSum: {
+                        $sum: {
+                            $cond: {
+                                if: {
+                                    $eq: ["$noOfStudent", null]
+                                },
+                                then: "$noOfBeds",
+                                else: {
+                                    $subtract: ["$noOfBeds", "$noOfStudent"]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]);
+
+        console.log(result)
+
+        if (result.length > 0) {
+            return result[0].bedDifferenceSum;
+        } else {
+            return 0;
+        }
+    } catch (error) {
+        console.error("Error calculating bed difference sum:", error);
+        throw error;
+    }
+
+
+}
+
+
+exports.find_room = async ({ _id, hallId }) => {
+
+    let data = await db.findOne({ _id: _id });
 
     if (data) {
         return {
@@ -37,9 +90,9 @@ exports.find_room = async ({ _id }) => {
             hallId: data.hallId,
             blockId: data.blockId,
             noOfBeds: data.noOfBeds,
-            isEmpty: data.isEmpty,
+            noOfStudent: data.noOfStudent,
             studentId: data.studentId,
-            status: data.status,
+            price: data.price,
             floor: data.floor
         }
     }
@@ -53,9 +106,9 @@ exports.create_room = async ({
     hallId,
     blockId,
     noOfBeds,
-    isEmpty,
+    noOfStudent,
     studentId,
-    status,
+    price,
     floor
 }) => {
     const data = await new db(
@@ -65,9 +118,9 @@ exports.create_room = async ({
             hallId: hallId,
             blockId: blockId,
             noOfBeds: noOfBeds,
-            isEmpty: isEmpty,
+            noOfStudent: noOfStudent,
             studentId: studentId,
-            status: status,
+            price: price,
             floor: floor
         }
     ).save();
@@ -80,9 +133,9 @@ exports.create_room = async ({
             hallId: data.hallId,
             blockId: data.blockId,
             noOfBeds: data.noOfBeds,
-            isEmpty: data.isEmpty,
+            noOfStudent: data.noOfStudent,
             studentId: data.studentId,
-            status: data.status,
+            price: data.price,
             floor: data.floor
         }
     }
@@ -97,9 +150,9 @@ exports.update_room = async ({
     hallId,
     blockId,
     noOfBeds,
-    isEmpty,
+    noOfStudent,
     studentId,
-    status,
+    price,
     floor
 }) => {
 
@@ -109,9 +162,9 @@ exports.update_room = async ({
         hallId: hallId,
         blockId: blockId,
         noOfBeds: noOfBeds,
-        isEmpty: isEmpty,
+        noOfStudent: noOfStudent,
         studentId: studentId,
-        status: status,
+        price: price,
         floor: floor
     })
 

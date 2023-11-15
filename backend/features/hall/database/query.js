@@ -158,6 +158,7 @@ exports.update_hall = async ({
     culuralSecretary,
     environmentalSecretory,
     maintainanceSecretory,
+    password
 }) => {
 
     const data = await db.updateOne({ _id: _id }, {
