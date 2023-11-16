@@ -7,6 +7,8 @@ import Hall from "../hall/Router"
 import Student from "../student/Router"
 import HallDetails from "../hallDetailsPage/Router"
 import RoomAllotment from "../roomAllotment/Router"
+import RoomChangeRequest from "../WardenRoomChangeRequest/Router"
+import StudentList from "../hallStudentList/Router"
 
 import Dashboard from "../wardenDashboard/Router"
 function Main() {
@@ -43,8 +45,8 @@ function Others() {
                         <Route path='/dashboard' element={<Dashboard />}></Route>
                         <Route path='/room-allotment' element={<RoomAllotment />}></Route>
                         <Route path='/hall-management/:id' element={<HallDetails />}></Route>
-                        {/* <Route path='/student-list' element={<Student />}></Route> */}
-                        {/* <Route path='/mess-list' element={<Mess />}></Route> */}
+                        <Route path='/room-change-request' element={<RoomChangeRequest />}></Route>
+                        <Route path='/student-list' element={<StudentList />}></Route>
 
 
                     </Routes>

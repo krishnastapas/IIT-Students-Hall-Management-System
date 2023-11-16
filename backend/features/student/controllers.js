@@ -84,6 +84,19 @@ exports.getAllStudent = async (req, res) => {
     }
 }
 
+exports.getAllStudentOfHall = async (req, res) => {
+    try {
+        const { hallId } = req.params
+
+        const data = await find_all_student({ hallId: hallId })
+        console.log(data)
+
+        return res.send({ code: 200, data: data.reverse(), message: "Data fetched succesfully" })
+    } catch (error) {
+        return res.send({ code: 500, message: "Error" + error })
+    }
+}
+
 exports.getAllStudentHallNotAlloted = async (req, res) => {
     try {
         let roomId = req.query.roomId;

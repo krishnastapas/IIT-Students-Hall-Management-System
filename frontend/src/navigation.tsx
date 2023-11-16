@@ -44,7 +44,7 @@ export const hall_navigations = [
     name: "Room Change Request",
     // layout: "/admin",
     icon: <MdRecordVoiceOver className="h-6 w-6" />,
-    path: "/admin/t",
+    path: "/warden/room-change-request",
   },
 
 
@@ -86,7 +86,18 @@ export const mess_navigations = [
 
 ];
 export const student_navigations = [
-
+  {
+    name: "Student Information",
+    // layout: "/admin",
+    icon: <MdRecordVoiceOver className="h-6 w-6" />,
+    path: "/student/dashboard",
+  }, {
+    name: "Room Change Request",
+    // layout: "/admin",
+    icon: <MdRecordVoiceOver className="h-6 w-6" />,
+    path: "/student/room-change-request",
+  },
+  
 
 ];
 

@@ -69,6 +69,7 @@ exports.wardenLogin = async (req, res) => {
 exports.passwordSet = async (req, res) => {
     try {
         const { wardenPassword, _id } = req.body
+        console.log(wardenPassword,_id)
         const cryptedPassword = await bcrypt.hash(wardenPassword, 12);
 
         const data = await update_hall({ _id: _id, wardenPassword: cryptedPassword })

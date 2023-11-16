@@ -1,5 +1,5 @@
 const { getCurrentDateTime } = require("../../helpers/utils")
-const { find_all_room, create_room, update_room, delete_room } = require("./database/query")
+const { find_all_room, create_room, update_room, delete_room, find_room, find_room_by_name } = require("./database/query")
 const bcrypt = require("bcrypt");
 
 // get all section of student
@@ -143,6 +143,31 @@ exports.emptyRoomList = async (req, res) => {
 
         // console.log(roomList.length)
         return res.send({ code: 200, data: { roomList: roomList, totalRooms: totalRooms }, message: "Room fetched Successfully." })
+    } catch (error) {
+        return res.send({ code: 500, message: error.message })
+    }
+}
+
+exports.IsRoomEmpty = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        let roomName = req.query.roomName;
+
+        console.log(roomName)
+        console.log(id)
+        const data = await find_room_by_name({ hallId: id, roomName: roomName });
+        if (!data) {
+            return res.send({ code: 400, message: "Cannot read the room." })
+        }
+
+        if (data.noOfBeds == data.noOfStudent) {
+            return res.send({ code: 400, data: data, message: "Room is Not empty." })
+
+        }
+
+        // console.log(roomList.length)
+        return res.send({ code: 200, data: data, message: "Room is Empty." })
     } catch (error) {
         return res.send({ code: 500, message: error.message })
     }

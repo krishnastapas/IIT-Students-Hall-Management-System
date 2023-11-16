@@ -68,6 +68,8 @@ app.use("/api", require("./features/block/routes"));
 // room 
 app.use("/api", require("./features/room/routes"))
 
+// room change request
+app.use("/api",require("./features/roomChangeRequest/routes"))
 
 app.use(express.static(path.join(__dirname, 'dist')));
 

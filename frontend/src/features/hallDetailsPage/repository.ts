@@ -42,7 +42,7 @@ export const passwordSetApi = async (hall: HallInterface) => {
 
     let payload = {
         _id:hall._id,
-        wardenPassowrd:hall.wardenPassowrd
+        wardenPassword:hall.wardenPassowrd
     }
 
     let accessToken = getJwtToken();

@@ -3,7 +3,9 @@ const db = require("./schema")
 exports.find_all_student = async ({ roomId, blockId, hallId }) => {
 
     let data = await db.find();
-
+    if (hallId) {
+        data = await db.find({ hallId: hallId });
+    }
     const res = []
     if (data.length) {
         for (let i = 0; i < data.length; i++) {

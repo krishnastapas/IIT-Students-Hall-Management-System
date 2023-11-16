@@ -100,6 +100,27 @@ exports.find_room = async ({ _id, hallId }) => {
     return null;
 }
 
+exports.find_room_by_name = async ({ roomName, hallId }) => {
+
+    let data = await db.findOne({ hallId: hallId, name: roomName });
+
+    if (data) {
+        return {
+            _id: data._id,
+            name: data.name,
+            date_time: data.date_time,
+            hallId: data.hallId,
+            blockId: data.blockId,
+            noOfBeds: data.noOfBeds,
+            noOfStudent: data.noOfStudent,
+            studentId: data.studentId,
+            price: data.price,
+            floor: data.floor
+        }
+    }
+
+    return null;
+}
 exports.create_room = async ({
     name,
     date_time,

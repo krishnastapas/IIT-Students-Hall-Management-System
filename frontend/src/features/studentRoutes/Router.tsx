@@ -7,6 +7,7 @@ import Hall from "../hall/Router"
 import Student from "../student/Router"
 import HallDetails from "../hallDetailsPage/Router"
 import Mess from "../mess/Router"
+import RoomChangeRequest from "../studentRoomChangeRequest/Router"
 
 import Dashboard from "../studentDashboard/Router"
 function Main() {
@@ -41,7 +42,7 @@ function Others() {
                 <Layout>
                     <Routes>
                         <Route path='/dashboard' element={<Dashboard />}></Route>
-                        {/* <Route path='/hall-management' element={<Hall />}></Route> */}
+                        <Route path='/room-change-request' element={<RoomChangeRequest />}></Route>
                         {/* <Route path='/hall-management/:id' element={<HallDetails />}></Route> */}
                         {/* <Route path='/student-list' element={<Student />}></Route> */}
                         {/* <Route path='/mess-list' element={<Mess />}></Route> */}
