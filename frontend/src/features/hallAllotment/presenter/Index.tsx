@@ -156,7 +156,10 @@ function Index() {
   
       const data = await allotHallStudent(studentallotedList)
 
-
+      if(data){
+        fetchStudentList()
+        fetchHallList()
+      }
     }
   }
 

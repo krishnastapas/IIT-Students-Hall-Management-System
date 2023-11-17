@@ -1,8 +1,8 @@
 const db = require("./schema")
 
-exports.find_all_staff = async () => {
+exports.find_all_staff = async ({ hallId }) => {
 
-    const data = await db.find();
+    const data = await db.find({ hallId: hallId });
     const res = []
     if (data.length) {
         for (let i = 0; i < data.length; i++) {
@@ -18,7 +18,7 @@ exports.find_all_staff = async () => {
                 designation: data[i].designation,
                 date_of_joining: data[i].date_of_joining,
                 date_time: data[i].date_time,
-                hallId:data[i].hallId
+                hallId: data[i].hallId
             })
         }
 
@@ -65,7 +65,7 @@ exports.create_staff = async ({
 }) => {
     const data = await new db(
         {
-            
+
             image: image,
             name: name,
             email: email,
@@ -76,7 +76,7 @@ exports.create_staff = async ({
             designation: designation,
             date_of_joining: date_of_joining,
             date_time: date_time,
-            hallId:hallId
+            hallId: hallId
         }
     ).save();
 
@@ -93,7 +93,7 @@ exports.create_staff = async ({
             designation: data.designation,
             date_of_joining: data.date_of_joining,
             date_time: data.date_time,
-            hallId:data.hallId
+            hallId: data.hallId
         }
     }
 

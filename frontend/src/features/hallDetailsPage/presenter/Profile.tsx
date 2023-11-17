@@ -3,6 +3,7 @@ import { HallInterface } from '../../hall/Model'
 import { editHall } from '../../hall/repository'
 import PasswordSet from './PasswordChange'
 import { readHall } from '../repository'
+import { useUserAuth } from '../../context/UserAuthContext'
 
 function Profile(
   props: {
@@ -14,6 +15,7 @@ function Profile(
   const [hall,
     setHall] = useState<HallInterface>(props.hall)
 
+  const { user } = useUserAuth()
   const [showModal, setShowModal] = useState("");
 
   const handleEditHall = async () => {
@@ -55,7 +57,7 @@ function Profile(
               <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about the Hall.</p>
             </div>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            {user.permissionNo == 1000 ? <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">Warden Name</label>
                 <div className="mt-2">
@@ -87,15 +89,12 @@ function Profile(
                 </div>
               </div>
 
-              <button type="button" 
-              onClick={()=>setShowModal("password")}
-              style={{ height: "35px", width: "140px" }} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Set Password</button>
+              <button type="button"
+                onClick={() => setShowModal("password")}
+                style={{ height: "35px", width: "140px" }} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Set Password</button>
 
 
-
-
-
-            </div>
+            </div> : ""}
           </div>
 
           <div className="border-b border-gray-900/10 pb-12">
@@ -218,14 +217,15 @@ function Profile(
             onClick={handleEditHall}
           >Save</button>
         </div>
-      </form>
+      </form >
 
       {showModal == "password" ?
         <PasswordSet
           hall={hall}
           onClose={() => setShowModal("")}
-        /> : ""}
-    </div>
+        /> : ""
+      }
+    </div >
   )
 }
 

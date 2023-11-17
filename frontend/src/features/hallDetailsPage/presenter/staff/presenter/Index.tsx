@@ -52,7 +52,7 @@ function Index() {
 
 
   const fetchStaffList = async () => {
-    const data = await readStuffList()
+    const data = await readStuffList(id??"")
     // console.log(data)
     setStaffList(data)
   }

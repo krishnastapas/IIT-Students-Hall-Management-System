@@ -4,11 +4,11 @@ import { responseInterface } from "../../../Model";
 import axios from "../../../axios";
 import { StaffInterface } from "./Model";
 
-export const readStuffList = async () => {
+export const readStuffList = async (id: string) => {
 
     try {
 
-        const path = "/staff-list";
+        const path = "/staff-list/" + id;
 
         let accessToken = getJwtToken()
 
@@ -18,16 +18,16 @@ export const readStuffList = async () => {
             }
         });
 
-         // console.log(response);
-         const res=response.data as responseInterface;
+        // console.log(response);
+        const res = response.data as responseInterface;
 
-         if (response.data.code === 200) {
-             // console.log("response", response.data.data)
-             return res.data
-         }
- 
-         showMessage({ message: response.data.message })
-         return []
+        if (response.data.code === 200) {
+            // console.log("response", response.data.data)
+            return res.data
+        }
+
+        showMessage({ message: response.data.message })
+        return []
 
     } catch (error) {
         showMessage({ message: error })
@@ -39,7 +39,7 @@ export const readStuffList = async () => {
 export const addStaff = async (staff: StaffInterface) => {
 
     let path = `/staff`
-    let payload =staff
+    let payload = staff
 
     // console.log(payload)
     let accessToken = getJwtToken();
@@ -53,13 +53,13 @@ export const addStaff = async (staff: StaffInterface) => {
         });
 
         console.log(response)
-        const res=response.data as responseInterface;
+        const res = response.data as responseInterface;
         if (response.data.code === 200) {
-            showMessage({message:res.message,status:res.code});
+            showMessage({ message: res.message, status: res.code });
             return true;
         }
 
-        showMessage({ message: res.message,status:res.code })
+        showMessage({ message: res.message, status: res.code })
         return false;
 
     } catch (error) {
@@ -87,13 +87,13 @@ export const editStaff = async (staff: StaffInterface) => {
         });
 
         console.log(response)
-        const res=response.data as responseInterface
+        const res = response.data as responseInterface
         if (response.data.code === 200) {
-            showMessage({message:res.message,status:res.code});
+            showMessage({ message: res.message, status: res.code });
             return true;
         }
 
-        showMessage({ message: res.message,status:res.code })
+        showMessage({ message: res.message, status: res.code })
         return false;
         // return []
 
@@ -105,7 +105,7 @@ export const editStaff = async (staff: StaffInterface) => {
 }
 
 //delete a staff
-export const deleteStaffApi = async (id:string) => {
+export const deleteStaffApi = async (id: string) => {
     console.log(id)
     let path = `/staff/${id}`
 
@@ -121,19 +121,19 @@ export const deleteStaffApi = async (id:string) => {
         });
 
         console.log(response)
-        const res:responseInterface=response.data;
+        const res: responseInterface = response.data;
 
-        if(res.code==200){
-            showMessage({message:res.message,status:res.code})
+        if (res.code == 200) {
+            showMessage({ message: res.message, status: res.code })
             return true;
         }
 
 
-        showMessage({ message: response.data.message,status:res.code })
+        showMessage({ message: response.data.message, status: res.code })
         return false
 
     } catch (error) {
-        showMessage({message:error})
+        showMessage({ message: error })
         // return [];
     }
 

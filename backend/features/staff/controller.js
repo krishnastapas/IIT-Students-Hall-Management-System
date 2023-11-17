@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 // get all section of student
 exports.getAllStaff = async (req, res) => {
     try {
-        const data = await find_all_staff()
+        const { id } = req.params
+        const data = await find_all_staff({hallId:id})
         console.log(data)
 
         return res.send({ code: 200, data: data.reverse(), message: "Data fetched succesfully" })
@@ -103,7 +104,7 @@ exports.putStaff = async (req, res) => {
             salary: salary,
             salaryType: salaryType,
             hallId: hallId,
-            _id:_id
+            _id: _id
         })
 
         if (!data) {
