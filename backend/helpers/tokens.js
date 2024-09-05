@@ -25,27 +25,24 @@ exports.decodeToken = async (token) => {
 
     let payload = jwt.verify(theToken, TOKEN_SECRET);
     console.log(payload)
-    // verify from the database
-    // console.log("sadfklsdfksadkjfsadkf..........")
-    // console.log(payload.permissionNo)
-    if (payload.permissionNo == 1000) {
-      return {
-        id: payload.id,
-        permissionNo: payload.permissionNo
-      }
+    return {
+      id: payload.id,
+      permissionNo: payload.permissionNo
     }
     
-    let data = await find_login_sesssion_accesstoken({ accessToken: theToken });
+    
+    // verify from the database
+    // let data = await find_login_sesssion_accesstoken({ accessToken: theToken });
 
-    // console.log(data)
-    if (data && data.userId != payload.id) {
-      return null
-    }
-    let payload_database = jwt.verify(data.accessToken, TOKEN_SECRET);
-    return {
-      id: data.userId,
-      permissionNo: payload_database.permissionNo
-    }
+    // // console.log(data)
+    // if (data && data.userId != payload.id) {
+    //   return null
+    // }
+    // let payload_database = jwt.verify(data.accessToken, TOKEN_SECRET);
+    // return {
+    //   id: data.userId,
+    //   permissionNo: payload_database.permissionNo
+    // }
   } catch (error) {
     console.log("Invallid token")
     return null;

@@ -1,8 +1,8 @@
 const db = require("./schema")
 
-exports.find_all_staff = async () => {
+exports.find_all_staff = async ({ hallId }) => {
 
-    const data = await db.find();
+    const data = await db.find({ hallId: hallId });
     const res = []
     if (data.length) {
         for (let i = 0; i < data.length; i++) {
@@ -18,6 +18,7 @@ exports.find_all_staff = async () => {
                 designation: data[i].designation,
                 date_of_joining: data[i].date_of_joining,
                 date_time: data[i].date_time,
+                hallId: data[i].hallId
             })
         }
 
@@ -50,7 +51,6 @@ exports.find_staff = async ({ _id }) => {
 }
 
 exports.create_staff = async ({
-    _id,
     image,
     name,
     email,
@@ -61,10 +61,11 @@ exports.create_staff = async ({
     designation,
     date_of_joining,
     date_time,
+    hallId
 }) => {
     const data = await new db(
         {
-            _id: _id,
+
             image: image,
             name: name,
             email: email,
@@ -75,6 +76,7 @@ exports.create_staff = async ({
             designation: designation,
             date_of_joining: date_of_joining,
             date_time: date_time,
+            hallId: hallId
         }
     ).save();
 
@@ -91,6 +93,7 @@ exports.create_staff = async ({
             designation: data.designation,
             date_of_joining: data.date_of_joining,
             date_time: data.date_time,
+            hallId: data.hallId
         }
     }
 
@@ -102,7 +105,6 @@ exports.update_staff = async ({
     image,
     name,
     email,
-    password,
     dob,
     salary,
     salaryType,
@@ -115,7 +117,6 @@ exports.update_staff = async ({
         image: image,
         name: name,
         email: email,
-        password: password,
         dob: dob,
         salary: salary,
         salaryType: salaryType,

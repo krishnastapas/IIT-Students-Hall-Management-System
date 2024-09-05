@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer/Footer";
-import { admin_navigations, superAdmin_navigations } from "../../navigation";
+import {  hall_navigations, mess_navigations, student_navigations, superAdmin_navigations } from "../../navigation";
 import { useUserAuth } from "../../features/context/UserAuthContext";
 import { navigationInterface } from "../../features/Model";
 
@@ -19,12 +19,18 @@ export default function Admin(props: { children: any }) {
     const { user } = useUserAuth()
     React.useEffect(() => {
         if (user) {
-            if (user.permissionNo == 4000) {
+            if (user.permissionNo == 1000) {
                 setNavigations(superAdmin_navigations)
             }
 
+            if(user.permissionNo==2000){
+                setNavigations(hall_navigations)
+            }
             if(user.permissionNo==3000){
-                setNavigations(admin_navigations)
+                setNavigations(student_navigations)
+            }
+            if(user.permissionNo==4000){
+                setNavigations(mess_navigations)
             }
         }
 

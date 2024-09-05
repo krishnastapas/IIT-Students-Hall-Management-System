@@ -17,6 +17,14 @@ exports.find_all_hall = async () => {
                 about: data[i].about,
                 gallery: data[i].gallery,
                 date_time: data[i].date_time,
+                wardenEmail: data[i].wardenEmail,
+                wardenPassword: data[i].wardenPassword,
+                generalSecretory: data[i].generalSecretory,
+                sportSecretary: data[i].sportSecretary,
+                culuralSecretary: data[i].culuralSecretary,
+                environmentalSecretory: data[i].environmentalSecretory,
+                maintainanceSecretory: data[i].maintainanceSecretory,
+
             })
         }
 
@@ -25,9 +33,17 @@ exports.find_all_hall = async () => {
     return []
 
 }
-exports.find_hall = async ({ _id }) => {
+exports.find_hall = async ({ _id, wardenEmail }) => {
 
-    const data = await db.findOne({ _id: _id });
+    let data
+    if (_id) {
+
+        data = await db.findOne({ _id: _id });
+    }
+    if (wardenEmail) {
+        data = await db.findOne({ wardenEmail: wardenEmail });
+
+    }
 
     if (data) {
         return {
@@ -41,6 +57,14 @@ exports.find_hall = async ({ _id }) => {
             about: data.about,
             gallery: data.gallery,
             date_time: data.date_time,
+            wardenEmail: data.wardenEmail,
+            wardenPassword: data.wardenPassword,
+            generalSecretory: data.generalSecretory,
+            sportSecretary: data.sportSecretary,
+            culuralSecretary: data.culuralSecretary,
+            environmentalSecretory: data.environmentalSecretory,
+            maintainanceSecretory: data.maintainanceSecretory,
+
         }
     }
 
@@ -58,6 +82,14 @@ exports.create_hall = async ({
     about,
     gallery,
     date_time,
+    wardenEmail,
+    wardenPassword,
+    generalSecretory,
+    sportSecretary,
+    culuralSecretary,
+    environmentalSecretory,
+    maintainanceSecretory,
+
 }) => {
     const data = await new db(
         {
@@ -71,6 +103,14 @@ exports.create_hall = async ({
             about: about,
             gallery: gallery,
             date_time: date_time,
+            wardenEmail: wardenEmail,
+            wardenPassword: wardenPassword,
+            generalSecretory: generalSecretory,
+            sportSecretary: sportSecretary,
+            culuralSecretary: culuralSecretary,
+            environmentalSecretory: environmentalSecretory,
+            maintainanceSecretory: maintainanceSecretory,
+
         }
     ).save();
 
@@ -86,6 +126,14 @@ exports.create_hall = async ({
             about: data.about,
             gallery: data.gallery,
             date_time: data.date_time,
+            wardenEmail: data.wardenEmail,
+            wardenPassword: data.wardenPassword,
+            generalSecretory: data.generalSecretory,
+            sportSecretary: data.sportSecretary,
+            culuralSecretary: data.culuralSecretary,
+            environmentalSecretory: data.environmentalSecretory,
+            maintainanceSecretory: data.maintainanceSecretory,
+
         }
     }
 
@@ -102,8 +150,19 @@ exports.update_hall = async ({
     established_by,
     about,
     gallery,
-    date_time, }) => {
+    date_time,
+    wardenEmail,
+    wardenPassword,
+    generalSecretory,
+    sportSecretary,
+    culuralSecretary,
+    environmentalSecretory,
+    maintainanceSecretory,
+    password
+}) => {
 
+    console.log(wardenPassword)
+    console.log(_id)
     const data = await db.updateOne({ _id: _id }, {
         image: image,
         name: name,
@@ -114,6 +173,14 @@ exports.update_hall = async ({
         about: about,
         gallery: gallery,
         date_time: date_time,
+        wardenEmail: wardenEmail,
+        wardenPassword: wardenPassword,
+        generalSecretory: generalSecretory,
+        sportSecretary: sportSecretary,
+        culuralSecretary: culuralSecretary,
+        environmentalSecretory: environmentalSecretory,
+        maintainanceSecretory: maintainanceSecretory,
+
     })
 
     if (data) {

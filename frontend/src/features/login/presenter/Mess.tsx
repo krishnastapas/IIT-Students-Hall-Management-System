@@ -2,12 +2,14 @@ import InputField from "../../../components/fields/InputField";
 import { FcGoogle } from "react-icons/fc";
 import Checkbox from "../../../components/checkbox";
 import { useState } from "react"
-import { userLogin } from "../repository";
+import { messLogin } from "../repository";
 import { useUserAuth } from "../../context/UserAuthContext";
 import { AdminInterface } from "../../context/Model";
 import { SetJwtToken } from "../../../utils/function";
 import { useNavigate } from "react-router-dom";
-export default function SignIn() {
+
+
+export default function MessLogin() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -16,12 +18,12 @@ export default function SignIn() {
   const handleSignIn = async () => {
     console.log(email)
     console.log(password)
-    const res = await userLogin({ email: email, password: password });
+    const res = await messLogin({ email: email, password: password });
     if (res?.code == 200) {
       authLogIn(res.data.userInfo);
       SetJwtToken(res.data.jwtToken);
-      if(res.data.userInfo.permissionNo==1000){
-        navigate("/chief-warden/dashboard")
+      if(res.data.userInfo.permissionNo==4000){
+        navigate("/mess/dashboard")
       }
       // navigate("/super-admin/student-list");
     }
@@ -31,7 +33,7 @@ export default function SignIn() {
       {/* Sign in section */}
       <div className="mt-[10vh] w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
-          Super Admin  Sign In
+          Mess Sign In
         </h4>
         <p className="mb-9 ml-1 text-base text-gray-600">
           Enter your email and password to sign in!

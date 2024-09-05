@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Warden from "./wardenRoutes/Router"
 import CheifWarden from "./cheifWardenRoutes/Router"
 import Students from "./studentRoutes/Router";
-import Worker from "./WorkerRoutes/Router";
+import Mess from "./messRoutes/Router";
 import Login from "./login/Router"
 import { UserAuthContextProvider } from './context/UserAuthContext';
 
@@ -22,9 +22,9 @@ function Main() {
                 <Route path='/login/*' element={<Login />}></Route>
 
                 <Route path='/chief-warden/*' element={<CheifWarden />}></Route>
-                {/* <Route path='/warden/*' element={<Warden />}></Route> */}
-                {/* <Route path='/students/*' element={<Students />}></Route> */}
-                {/* <Route path='/worker/*' element={<Worker />}></Route> */}
+                <Route path='/warden/*' element={<Warden />}></Route>
+                <Route path='/student/*' element={<Students />}></Route>
+                <Route path='/mess/*' element={<Mess />}></Route>
 
             </Routes>
             </UserAuthContextProvider>

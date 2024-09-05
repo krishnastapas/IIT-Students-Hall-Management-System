@@ -1,9 +1,12 @@
+const { getCurrentDateTime } = require("../../helpers/utils")
 const { find_all_staff, create_staff, update_staff, delete_staff } = require("./database/query")
+const bcrypt = require("bcrypt");
 
 // get all section of student
 exports.getAllStaff = async (req, res) => {
     try {
-        const data = await find_all_staff()
+        const { id } = req.params
+        const data = await find_all_staff({hallId:id})
         console.log(data)
 
         return res.send({ code: 200, data: data.reverse(), message: "Data fetched succesfully" })
@@ -18,31 +21,45 @@ exports.postStaff = async (req, res) => {
 
         // console.log("Inside Post Staff Api.....")
         const {
-            _id,
             image,
             name,
-            warden_incharge,
-            date_of_establish,
-            care_taker,
-            established_by,
-            about,
-            gallery,
+            email,
+            password,
+            dob,
+            salary,
+            salaryType,
+            designation,
+            date_of_joining,
             date_time,
+            hallId
         } = req.body
 
+        // console.log({
+        //     image,
+        //     name,
+        //     email,
+        //     password,
+        //     dob,
+        //     salary,
+        //     salaryType,
+        //     designation,
+        //     date_of_joining,
+        //     date_time,
+        // })
+        const cryptedPassword = await bcrypt.hash(password, 12);
 
         const data = await create_staff({
-            _id: _id,
-            image: image,
             name: name,
-            date_of_establish: date_of_establish,
-            warden_incharge: warden_incharge,
-            care_taker: care_taker,
-            established_by: established_by,
-            about: about,
-            gallery: gallery,
-            date_time: date_time,
-
+            email: email,
+            date_of_joining: date_of_joining,
+            date_time: getCurrentDateTime(),
+            designation: designation,
+            dob: dob,
+            image: image,
+            password: cryptedPassword,
+            salary: salary,
+            salaryType: salaryType,
+            hallId: hallId
         });
 
         if (!data) {
@@ -64,28 +81,30 @@ exports.putStaff = async (req, res) => {
             _id,
             image,
             name,
-            warden_incharge,
-            date_of_establish,
-            care_taker,
-            established_by,
-            about,
-            gallery,
+            email,
+            dob,
+            salary,
+            salaryType,
+            designation,
+            date_of_joining,
             date_time,
+            hallId
 
         } = req.body
 
 
         const data = await update_staff({
-            _id: _id,
-            image: image,
             name: name,
-            date_of_establish: date_of_establish,
-            warden_incharge: warden_incharge,
-            care_taker: care_taker,
-            established_by: established_by,
-            about: about,
-            gallery: gallery,
-            date_time: date_time,
+            email: email,
+            date_of_joining: date_of_joining,
+            date_time: getCurrentDateTime(),
+            designation: designation,
+            dob: dob,
+            image: image,
+            salary: salary,
+            salaryType: salaryType,
+            hallId: hallId,
+            _id: _id
         })
 
         if (!data) {
